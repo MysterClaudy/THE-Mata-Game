@@ -1,0 +1,43 @@
+E:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MATA game.exe.config
+E:\AIE coding\Group Game\projects\MATA game\MATA game\obj\x86\Debug\MATA game.exe
+E:\AIE coding\Group Game\projects\MATA game\MATA game\obj\x86\Debug\MATA game.pdb
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MATA game.exe.config
+D:\AIE coding\Group Game\projects\MATA game\MATA game\obj\x86\Debug\MATA game.exe
+D:\AIE coding\Group Game\projects\MATA game\MATA game\obj\x86\Debug\MATA game.pdb
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Background\background.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Black screen.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Buttons\exit.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Health\Health.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Health\HealthBar.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Health\HealthChanging.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Levels\1.txt
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Player.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Buttons\resume.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Buttons\start.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Tiles\Exit.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Tiles\WallA0.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Tiles\WallB0.png
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\Content\Font\scoreFont.xnb
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MATA game.exe
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MATA game.pdb
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MonoGame.Framework.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.MediaFoundation.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.XAudio2.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.DXGI.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct3D11.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct2D1.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.XInput.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.RawInput.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct3D9.dll
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\MonoGame.Framework.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.MediaFoundation.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.XAudio2.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.DXGI.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct3D11.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct2D1.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.XInput.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.RawInput.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\bin\Windows\Debug\SharpDX.Direct3D9.xml
+D:\AIE coding\Group Game\projects\MATA game\MATA game\obj\x86\Debug\MATA game.csprojResolveAssemblyReference.cache
