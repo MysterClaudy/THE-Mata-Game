@@ -97,6 +97,12 @@
     <Content Include="Content\Buttons\start.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Player_still.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Player_walking.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\TempEnemy.png" />
     <Content Include="Content\TempSpawn.png" />
     <Content Include="Content\TempWall.png" />
