@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TrebleGameUtils
 {
+    /// <summary>
+    /// Debugging for the next generation! Coming to a game near you!
+    /// </summary>
     class DevLogging // Version 5
     {
         public SpriteFont textFont;
