@@ -32,6 +32,7 @@ namespace MATA_game
                   , scale
                   , speed)
         {
+
             m_size = size;
         }
 
