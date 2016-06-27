@@ -433,7 +433,7 @@ namespace MATA_game
         
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin( SpriteSortMode.Deferred,BlendState.AlphaBlend, null,null, null,null, camera.viewMatrix);
             //  spriteBatch.Draw(background, Vector2.Zero, Color.White);
@@ -473,4 +473,3 @@ namespace MATA_game
         }
     }
 }
->>>>>>> master:MATA game/Game1.cs
