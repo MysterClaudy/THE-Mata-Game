@@ -85,7 +85,7 @@ namespace MATA_game
 
         public void InitializePlayer()
         {
-            player = new PlayerClass(null, spawningPosition, new Vector2(48, 64), 0, 1.5f, 3);
+            player = new PlayerClass(spawningPosition);
             player.maxLimit = new Vector2(graphics.PreferredBackBufferWidth + (player.m_size.X / 2), graphics.PreferredBackBufferHeight + (player.m_size.Y / 2));
             player.minLimit = new Vector2(0 - (player.m_size.X / 2), 0 - (player.m_size.Y / 2));
         }
@@ -103,7 +103,8 @@ namespace MATA_game
             gameStates.resumeButton = Content.Load<Texture2D>("Buttons/resume");
             healthBar.font = Content.Load<SpriteFont>("Font/scoreFont");
             background = Content.Load<Texture2D>("Background/background");
-            player.m_texture = Content.Load<Texture2D>("Player_still");
+             player.m_texture = Content.Load<Texture2D>("xeonsheet");
+            player.sTexture = Content.Load<Texture2D>("xeonsheet");
             blackScreen = Content.Load<Texture2D>("Black screen");
             textFont = Content.Load<SpriteFont>("Font/scoreFont");
             

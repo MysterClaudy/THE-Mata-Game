@@ -67,11 +67,22 @@ namespace MATA_game
             }
         }
 
-        public abstract void AnimationDone(string animation);
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sTexture, m_position + Offsets[currentAnimation], sAnimations[currentAnimation][frameIndex], Color.White);
         }
+
+        public void PlayAnimation(string name)
+        {
+            if(currentAnimation != name && currentDir == myDirection.None)
+            {
+                currentAnimation = name;
+                frameIndex = 0;
+            }
+        }
+
+        public abstract void AnimationDone(string animation);
+
+        
     }
 }
