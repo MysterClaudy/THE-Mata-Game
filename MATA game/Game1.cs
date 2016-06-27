@@ -107,7 +107,7 @@ namespace MATA_game
 
         void LoadNextLevel()
         {            
-            levelIndex = (levelIndex + 1); //% numberOfLevels;
+            levelIndex++; //% numberOfLevels;
             if (level != null)
                 level.Dispose();
 
@@ -122,10 +122,11 @@ namespace MATA_game
             {
                 spawningPosition = new Vector2(700,300);
             }
-            if(levelIndex == 1)
+            if (levelIndex == 1)
             {
                 player.m_position = new Vector2(100, 100);
             }
+            Debug.WriteToFile("Loading Level: " + levelIndex, true, false);
         }
 
         public void InitializePlayer()
