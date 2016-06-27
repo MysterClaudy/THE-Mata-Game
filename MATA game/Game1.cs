@@ -1,34 +1,42 @@
-﻿ using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using System.IO;
-using System.Threading;
-using System;
+using TrebleGameUtils;
 
 namespace MATA_game
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// Name: 
+    /// Description: 
+    /// Version: 0.0.2.20 (Developmental Stages)
+    /// Genre: 2D Platformer
+    /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
+    /// Game Engine: MonoGame/XNA
+    /// Language: C#
+    /// Dev Notes: Our third game and the first collaborative game that either of us had ever made
     /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        DevLogging Debug;
+
         GameStates gameStates;
         PlayerClass player;
-        Texture2D background;
         Camera camera;
         HealthBar healthBar;
         Level level;
-        private int levelIndex = -1;
-        private const int numberOfLevels = 2;
+
+        Texture2D background;
+        int levelIndex = -1;
+        const int numberOfLevels = 2;
         Vector2 spawningPosition;
         KeyboardState oldKeyState;
         bool isloadingLevel = false;
         Texture2D blackScreen;
-        SpriteFont textFont;
+        string GameVersionBuild;
 
         private const float delay = 5;
         private float remainingdelay = delay;
@@ -37,21 +45,55 @@ namespace MATA_game
         private const float delay3 = 2;     
         private float remainingdelay3 = delay3;
 
+        int res_OriginalGameHeight;
+        int res_OriginalGameWidth;
+        int res_ScreenHeight;
+        int res_ScreenWidth;
+        float res_ScreenScaleUpDifference;
+        float res_ScreenScaleDownDifference;
+        bool FullScreen;
+
         public Game1()
         {
-            graphics =   new GraphicsDeviceManager(this);
+            Debug = new DevLogging();
+            File.Delete(Debug.GetCurrentDirectory());
+            GameVersionBuild = "v0.0.2.20 (27/06/16)";
+            Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild, true, false);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            camera = new Camera();
+
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
-            camera = new Camera();
+
+            res_OriginalGameHeight = graphics.PreferredBackBufferHeight;
+            res_OriginalGameWidth = graphics.PreferredBackBufferWidth;
+            res_ScreenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            res_ScreenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+
+            Debug.WriteToFile("Screen size: " + res_ScreenWidth + " x " + res_ScreenHeight, true, false);
+            Debug.WriteToFile("Game screen size: " + res_OriginalGameWidth + " x " + res_OriginalGameHeight, true, false);
+
+            #region Future - Fullscreen
+            if (FullScreen)
+            {
+                res_ScreenScaleUpDifference = (float)res_ScreenHeight / (float)res_OriginalGameHeight;
+                res_ScreenScaleDownDifference = (float)res_ScreenHeight / (float)res_OriginalGameHeight;
+                Debug.WriteToFile("Scale up from OriginalGameHeight to ScreenHeight: " + res_ScreenScaleUpDifference, true, false);
+            }
+            #endregion
         }
 
-        
+
         protected override void Initialize()
         {
-            IsMouseVisible = true;
-            // TODO: Add your initialization logic here
+            Debug.WriteToFile("Started Initializing Game", true, false);
+
+            InitializeClasses();
+
+            IsMouseVisible = true; // Delete this, add own cursor in the future
+            
             healthBar = new HealthBar(Content);
             gameStates = new GameStates();
 
@@ -60,10 +102,10 @@ namespace MATA_game
             InitializePlayer();
             
             base.Initialize();
-            
+            Debug.WriteToFile("Finished Initializing Game", true, false);
         }
 
-        private void LoadNextLevel()
+        void LoadNextLevel()
         {            
             levelIndex = (levelIndex + 1); //% numberOfLevels;
             if (level != null)
@@ -71,7 +113,10 @@ namespace MATA_game
 
             string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
             using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+            {
                 level = new Level(Services, fileStream, levelIndex);
+                Debug.WriteToFile("Loading Map...", true, false);
+            }
 
             if (levelIndex == 0)
             {
@@ -90,12 +135,15 @@ namespace MATA_game
             player.minLimit = new Vector2(0 - (player.m_size.X / 2), 0 - (player.m_size.Y / 2));
         }
 
-        
+        void InitializeClasses()
+        {
+            Debug = new DevLogging();
+        }
 
-        
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            Debug.WriteToFile("Started Loading Game Textures", true, false);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.font = Content.Load<SpriteFont>("Font/scoreFont");
             gameStates.startButtonTexture = Content.Load<Texture2D>("Buttons/start");
@@ -105,18 +153,17 @@ namespace MATA_game
             background = Content.Load<Texture2D>("Background/background");
             player.m_texture = Content.Load<Texture2D>("Player_still");
             blackScreen = Content.Load<Texture2D>("Black screen");
-            textFont = Content.Load<SpriteFont>("Font/scoreFont");
-            
-            // TODO: use this.Content to load your game content here
-        }
+            Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
-        
+            Debug.WriteToFile("Finished Loading Game Textures", true, false);
+        }
+                
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        private void info(SpriteBatch spriteBatch, GameTime gameTime)
+        void Info(SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (levelIndex == 1)
             {
@@ -124,22 +171,25 @@ namespace MATA_game
                 remainingdelay2 -= timer2;
                 if (remainingdelay2 <= 0)
                 {
-                    spriteBatch.DrawString(textFont, "time: 10:45pm", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 100), Color.White);
+                    spriteBatch.DrawString(Debug.textFont, "time: 10:45pm", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 100), Color.White);
                 }
                 var timer3 = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 remainingdelay3 -= timer3;
                 if (remainingdelay3 <= 0)
                 {
-                    spriteBatch.DrawString(textFont, "location: Bermuda Triangle", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 80), Color.White);
+                    spriteBatch.DrawString(Debug.textFont, "location: Bermuda Triangle", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 80), Color.White);
                 }
             }
         }
 
-        
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Debug.WriteToFile("Ending Game...", true, false);
                 Exit();
+            }
+
             level.player = player;
             gameStates.healthBar = healthBar;
             gameStates.graphics = graphics;
@@ -160,17 +210,14 @@ namespace MATA_game
                 isloadingLevel = true;
             }
             oldKeyState = newKeyState;
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
-
         
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin( SpriteSortMode.Deferred,BlendState.AlphaBlend, null,null, null,null, camera.viewMatrix);
             //  spriteBatch.Draw(background, Vector2.Zero, Color.White);
             if(gameStates.isGame == true)
@@ -178,7 +225,6 @@ namespace MATA_game
                 player.Draw(gameTime, spriteBatch, player.m_texture);
                 level.Draw(gameTime, spriteBatch);
             }
-           
             
             spriteBatch.End();
             
@@ -195,7 +241,7 @@ namespace MATA_game
             if (isloadingLevel == true)
             {
                 spriteBatch.Draw(blackScreen, new Vector2(player.m_position.X - 700, player.m_position.Y - 700), Color.White);
-                info(spriteBatch, gameTime);
+                Info(spriteBatch, gameTime);
 
                 var timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 remainingdelay -= timer;
@@ -204,7 +250,6 @@ namespace MATA_game
                     isloadingLevel = false;                    
                     remainingdelay = delay;
                 }
-                
             }
             spriteBatch.End();
             base.Draw(gameTime);

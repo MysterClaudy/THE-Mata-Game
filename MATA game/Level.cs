@@ -33,7 +33,6 @@ namespace MATA_game
 
         #endregion
 
-
         #region Collectors
         public PlayerClass Player
         {
