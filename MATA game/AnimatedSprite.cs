@@ -76,7 +76,6 @@ namespace MATA_game
         }
 
         public abstract void AnimationDone(string animation);
-
         
     }
 }
