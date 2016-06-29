@@ -22,7 +22,6 @@ namespace MATA_game
         {
             texture = Texture;
             collision = Collision;
-
         }
     }
 }

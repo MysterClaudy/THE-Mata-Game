@@ -5,7 +5,7 @@ namespace MATA_game
 {
     class GameObject
     {
-        #region properties
+        #region Properties
         public Texture2D m_texture;
         public Vector2 m_position;
         public Vector2 m_size;
@@ -18,7 +18,7 @@ namespace MATA_game
         public bool m_flipVertical;
         #endregion
 
-        #region collectors
+        #region Collectors
         public GameObject(Texture2D texture = null, Vector2 position = new Vector2(), Vector2 size = new Vector2(), float rotation = 0f, float scale = 1f)
         {
             m_texture = texture;

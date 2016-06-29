@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-
 namespace MATA_game
 {
     public class HealthBar
@@ -98,7 +97,6 @@ namespace MATA_game
                 , SpriteEffects.None
                 , 0);
          //   spriteBatch.DrawString(font, "health:" + (currentHealth), new Vector2( 300, 300), Color.White);
-
             
             //   spriteBatch.Draw(healthBar, healthPosition, Color.White);
             //  spriteBatch.Draw(healthTexture, healthPosition, Color.White);

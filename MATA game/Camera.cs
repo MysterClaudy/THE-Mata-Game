@@ -10,7 +10,6 @@ namespace MATA_game
         public HealthBar healthBar;
         #endregion
 
-
         #region Collectors
         public Matrix ViewMatrix
         {
@@ -30,10 +29,7 @@ namespace MATA_game
         public void Update(Vector2 playerPosition, Vector2 healthBarPos)
         {
             position.X = playerPosition.X - (ScreenWidth / 2);
-            position.Y = playerPosition.Y - (ScreenHeight / 2);
-
-            
-            
+            position.Y = playerPosition.Y - (ScreenHeight / 2);            
 
             if (position.X < 0)
                 position.X = 0;
