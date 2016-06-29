@@ -11,16 +11,16 @@ namespace MATA_game
     {
         #region Properties
         public Tile[,] tiles;
-        private Texture2D[] layers;
-        private const int entityLayer = 2;
+        Texture2D[] layers;
+        const int entityLayer = 2;
         public PlayerClass player;
         GameStates gameStates;
 
-        private List<EnemyClass> enemies = new List<EnemyClass>();
+        List<EnemyClass> enemies = new List<EnemyClass>();
 
-        private static readonly Point InvalidPosition = new Point(-1, -1);
-        private Point exit = InvalidPosition;
-        private Random random = new Random();
+        static readonly Point InvalidPosition = new Point(-1, -1);
+        Point exit = InvalidPosition;
+        Random random = new Random();
         bool reachedExit;
         public GraphicsDeviceManager graphics;
 
@@ -65,7 +65,7 @@ namespace MATA_game
 
         }
 
-        private void LoadTiles(Stream fileStream)
+        void LoadTiles(Stream fileStream)
         {
             int width;
             List<string> lines = new List<string>();
@@ -93,16 +93,9 @@ namespace MATA_game
                     tiles[x, y] = LoadTile(tileType, x, y);
                 }
             }
-
-            /*if (Player == null)
-                throw new NotSupportedException("spawning position needed"8);
-            if (exit == null)
-                throw new NotSupportedException("exit position needed");*/
         }
 
-
-
-        private Tile LoadTile(char tileType, int x, int y)
+        Tile LoadTile(char tileType, int x, int y)
         {
             switch (tileType)
             {
@@ -125,20 +118,18 @@ namespace MATA_game
             }
         }
 
-        private Tile LoadTile(string name, TileCollision collision)
+        Tile LoadTile(string name, TileCollision collision)
         {
             return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
         }
 
-        
-
-        private Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
+        Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
         {
             int index = random.Next(variationCount);
             return LoadTile(baseName + index, collision);
         }
 
-        private Tile LoadExitTile(int x, int y)
+        Tile LoadExitTile(int x, int y)
         {
             if (exit != InvalidPosition)
                 throw new NotSupportedException("only 1 exit Allowed");
@@ -148,7 +139,7 @@ namespace MATA_game
             return LoadTile("Exit", TileCollision.Passable);
         }
 
-        private Tile LoadEnemyTile(int x, int y, string spriteSet)
+        Tile LoadEnemyTile(int x, int y, string spriteSet)
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
             enemies.Add(new EnemyClass());
@@ -170,7 +161,7 @@ namespace MATA_game
             return tiles[x, y].collision;
         }
 
-        private void UpdateEnemies(GameTime gameTime)
+        void UpdateEnemies(GameTime gameTime)
         {
             foreach (EnemyClass enemy in enemies)
             {
@@ -183,13 +174,11 @@ namespace MATA_game
         {
             DrawTiles(spriteBatch);
 
-           //     player.Draw(gameTime, spriteBatch);           
-
             foreach (EnemyClass enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
         }
 
-        private void DrawTiles(SpriteBatch spriteBatch)
+        void DrawTiles(SpriteBatch spriteBatch)
         {
             for (int y = 0; y < Height; ++y)
             {
@@ -204,7 +193,6 @@ namespace MATA_game
                 }
             }
         }
-
         #endregion
     }
 }
