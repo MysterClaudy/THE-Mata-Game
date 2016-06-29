@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.IO;
 using TrebleGameUtils;
 
@@ -62,8 +63,9 @@ namespace MATA_game
         {
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
-            GameVersionBuild = "v0.1.5.48 (29/06/16)";
-            Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild, true, false);
+            DateTime thisDay = DateTime.Now;
+            GameVersionBuild = "v0.1.5.48 ";
+            Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             camera = new Camera();

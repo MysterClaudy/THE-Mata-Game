@@ -8,7 +8,7 @@ namespace TrebleGameUtils
     /// <summary>
     /// Debugging for the next generation! Coming to a game near you!
     /// </summary>
-    class DevLogging // Version 5
+    class DevLogging // Version 6
     {
         public SpriteFont textFont;
 
@@ -57,17 +57,17 @@ namespace TrebleGameUtils
                 {
                     if (!toConsole && !warning)
                     {
-                        writer.WriteLine("[DEBUG] " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt ") + text);
+                        writer.WriteLine("[DEBUG] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + text);
                         writer.Close();
                     }
                     else if (toConsole && !warning)
                     {
-                        writer.WriteLine("[INFO] " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt ") + text);
+                        writer.WriteLine("[INFO] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + text);
                         writer.Close();
                     }
                     else if (toConsole || !toConsole && warning)
                     {
-                        writer.WriteLine("[WARNING] " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt ") + text);
+                        writer.WriteLine("[WARNING] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + text);
                         writer.Close();
                     }
                     else
