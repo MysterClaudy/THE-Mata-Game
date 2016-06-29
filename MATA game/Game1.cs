@@ -9,7 +9,7 @@ namespace MATA_game
     /// <summary>
     /// Name: 
     /// Description: 
-    /// Version: 0.1.4.43 (Developmental Stages)
+    /// Version: 0.1.4.45 (Developmental Stages)
     /// Genre: 2D Platformer
     /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
     /// Game Engine: MonoGame/XNA
@@ -63,7 +63,7 @@ namespace MATA_game
         {
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
-            GameVersionBuild = "v0.1.4.43 (29/06/16)";
+            GameVersionBuild = "v0.1.4.45 (29/06/16)";
             Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild, true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
