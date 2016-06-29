@@ -16,7 +16,7 @@ namespace MATA_game
         public PlayerClass player;
         GameStates gameStates;
 
-        private List<Enemy> enemies = new List<Enemy>();
+        private List<EnemyClass> enemies = new List<EnemyClass>();
 
         private static readonly Point InvalidPosition = new Point(-1, -1);
         private Point exit = InvalidPosition;
@@ -151,7 +151,7 @@ namespace MATA_game
         private Tile LoadEnemyTile(int x, int y, string spriteSet)
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            enemies.Add(new Enemy());
+            enemies.Add(new EnemyClass());
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -172,7 +172,7 @@ namespace MATA_game
 
         private void UpdateEnemies(GameTime gameTime)
         {
-            foreach (Enemy enemy in enemies)
+            foreach (EnemyClass enemy in enemies)
             {
                 enemy.Update(gameTime);
             }
@@ -185,7 +185,7 @@ namespace MATA_game
 
            //     player.Draw(gameTime, spriteBatch);           
 
-            foreach (Enemy enemy in enemies)
+            foreach (EnemyClass enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
         }
 
