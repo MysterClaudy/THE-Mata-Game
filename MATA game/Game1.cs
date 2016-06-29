@@ -9,7 +9,7 @@ namespace MATA_game
     /// <summary>
     /// Name: 
     /// Description: 
-    /// Version: 0.1.4.40 (Developmental Stages)
+    /// Version: 0.1.4.43 (Developmental Stages)
     /// Genre: 2D Platformer
     /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
     /// Game Engine: MonoGame/XNA
@@ -38,7 +38,10 @@ namespace MATA_game
         KeyboardState oldKeyState;
         bool isloadingLevel = false;
         Texture2D blackScreen;
+
         string GameVersionBuild;
+        public Vector2 CentreScreen;
+        public Vector2 CurrentScreenSize;
 
         private const float delay = 5;
         private float remainingdelay = delay;
@@ -60,7 +63,7 @@ namespace MATA_game
         {
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
-            GameVersionBuild = "v0.1.4.40 (29/06/16)";
+            GameVersionBuild = "v0.1.4.43 (29/06/16)";
             Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild, true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -69,6 +72,12 @@ namespace MATA_game
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
+
+            CentreScreen = new Vector2(graphics.PreferredBackBufferWidth / 2,
+                                            graphics.PreferredBackBufferHeight / 2);
+
+            CurrentScreenSize = new Vector2(graphics.PreferredBackBufferWidth,
+                                                graphics.PreferredBackBufferHeight);
 
             res_OriginalGameHeight = graphics.PreferredBackBufferHeight;
             res_OriginalGameWidth = graphics.PreferredBackBufferWidth;
@@ -98,11 +107,22 @@ namespace MATA_game
             IsMouseVisible = true;
 
             gameStates.Game = this;
-
-            InitializePlayer();
             
             base.Initialize();
             Debug.WriteToFile("Finished Initializing Game", true, false);
+        }
+
+        void InitializeClasses()
+        {
+            healthBar = new HealthBar(Content);
+            gameStates = new GameStates();
+            player = new PlayerClass(spawningPosition);
+        }
+        
+        void InitilizeProperties()
+        {
+            gameStates.Game = this;
+            player.Game = this;
         }
 
         public void LoadNextLevel()
@@ -127,25 +147,6 @@ namespace MATA_game
                 player.m_position = new Vector2(100, 100);
             }
             Debug.WriteToFile("Loading Level: " + levelIndex, true, false);
-        }
-
-        public void InitializePlayer()
-        {
-            player = new PlayerClass(spawningPosition);
-            player.maxLimit = new Vector2(graphics.PreferredBackBufferWidth + (player.m_size.X / 2), graphics.PreferredBackBufferHeight + (player.m_size.Y / 2));
-            player.minLimit = new Vector2(0 - (player.m_size.X / 2), 0 - (player.m_size.Y / 2));
-        }
-
-        void InitializeClasses()
-        {
-            Debug = new DevLogging();
-            healthBar = new HealthBar(Content);
-            gameStates = new GameStates();
-        }
-        
-        void InitilizeProperties()
-        {
-            gameStates.Game = this;
         }
 
         protected override void LoadContent()

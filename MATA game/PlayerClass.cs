@@ -7,8 +7,8 @@ namespace MATA_game
 {
     class PlayerClass : AnimatedSprite
     {
-        #region properties
-
+        #region Properties
+        public Game1 Game;
 
         #endregion
 
@@ -29,19 +29,17 @@ namespace MATA_game
             PlayAnimation("Idle");
         }
 
-        public void LoadContent(ContentManager content)
+        void Initialize()
         {
-            sTexture = content.Load<Texture2D>("xeonsheet");
+            maxLimit = new Vector2(Game.CurrentScreenSize.X + (m_size.X / 2), Game.CurrentScreenSize.Y + (m_size.Y / 2));
+            minLimit = new Vector2(0 - (m_size.X / 2), 0 - (m_size.Y / 2));
         }
-
-
         
         public override void Update(GameTime gameTime)
         {
             sDirection = Vector2.Zero;
             m_position += m_velocity;
         }
-        
 
         public void GetInput(GameTime gameTime)
         {
