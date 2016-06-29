@@ -17,6 +17,8 @@ namespace MATA_game
             Options
         }
 
+        public Game1 Game;
+
         GameState gameState;
         public SpriteFont font;
         
@@ -99,11 +101,6 @@ namespace MATA_game
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
                 GameObject HealthBar = new GameObject(player.healthBar, player.healthPosition, new Vector2(1200, 400), 0, healthScale);
                 HealthBar.Draw(gameTime, spriteBatch, player.healthBar);*/
-                
-                
-                
-                
-
             }
 
             if (gameState == GameState.PauseMenu)
@@ -125,6 +122,7 @@ namespace MATA_game
                 if(mouseClickedRect.Intersects(startButtonRect))
                 {
                     gameState = GameState.Game;
+                    Game.LoadNextLevel();
                 }
 
                 else if (mouseClickedRect.Intersects(exitButtonRect))

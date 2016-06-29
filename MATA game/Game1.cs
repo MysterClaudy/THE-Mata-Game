@@ -9,7 +9,7 @@ namespace MATA_game
     /// <summary>
     /// Name: 
     /// Description: 
-    /// Version: 0.1.4.38 (Developmental Stages)
+    /// Version: 0.1.4.39 (Developmental Stages)
     /// Genre: 2D Platformer
     /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
     /// Game Engine: MonoGame/XNA
@@ -23,6 +23,7 @@ namespace MATA_game
         SpriteBatch spriteBatch;
 
         DevLogging Debug;
+        Game1 Game;
 
         GameStates gameStates;
         PlayerClass player;
@@ -59,7 +60,7 @@ namespace MATA_game
         {
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
-            GameVersionBuild = "v0.1.4.38 (29/06/16)";
+            GameVersionBuild = "v0.1.4.39 (29/06/16)";
             Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild, true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -92,11 +93,11 @@ namespace MATA_game
             Debug.WriteToFile("Started Initializing Game", true, false);
 
             InitializeClasses();
+            InitilizeProperties();
 
             IsMouseVisible = true;
 
-            healthBar = new HealthBar(Content);
-            gameStates = new GameStates();
+            gameStates.Game = this;
 
             //LoadNextLevel();
 
@@ -106,7 +107,7 @@ namespace MATA_game
             Debug.WriteToFile("Finished Initializing Game", true, false);
         }
 
-        void LoadNextLevel()
+        public void LoadNextLevel()
         {
             levelIndex++; //% numberOfLevels;
             if (level != null)
@@ -140,6 +141,13 @@ namespace MATA_game
         void InitializeClasses()
         {
             Debug = new DevLogging();
+            healthBar = new HealthBar(Content);
+            gameStates = new GameStates();
+        }
+        
+        void InitilizeProperties()
+        {
+            gameStates.Game = this;
         }
 
         protected override void LoadContent()
