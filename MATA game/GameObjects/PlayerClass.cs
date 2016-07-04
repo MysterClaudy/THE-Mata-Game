@@ -13,11 +13,13 @@ namespace MATA_game
         #endregion
 
         #region Collectors
-        public PlayerClass(Vector2 position)
-            : base(position)
+        public PlayerClass(Game1 game, Vector2 position)
+            : base(game, position)
         {
+            
             framesPerSecond = 2;
-             AddAnimation(3, 170, 1, "Left", 71, 48, new Vector2(0, 0));
+
+            AddAnimation(3, 170, 1, "Left", 71, 48, new Vector2(0, 0));
             AddAnimation(1, 48, 0, "LeftIdle", 71, 80, new Vector2(0, 0));
             AddAnimation(3, 48, 1, "Right", 32, 48, new Vector2(0, 0));
             AddAnimation(1, 48, 1, "RightIdle", 32, 48, new Vector2(0, 0));
@@ -37,8 +39,13 @@ namespace MATA_game
         
         public override void Update(GameTime gameTime)
         {
+
             sDirection = Vector2.Zero;
             m_position += m_velocity;
+            if (m_texture == null)
+            {
+                
+            }
         }
 
         public void GetInput(GameTime gameTime)

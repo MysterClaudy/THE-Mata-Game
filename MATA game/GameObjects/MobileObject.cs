@@ -11,6 +11,7 @@ namespace MATA_game
         public Vector2 maxLimit;
 
         public MobileObject(
+            Game1 game,
             Texture2D texture = null,
             Vector2 position = new Vector2(),
             Vector2 size = new Vector2(),
@@ -18,6 +19,7 @@ namespace MATA_game
             float scale = 1f,
             float speed = 5.0f)
             : base(
+                  game,
                   texture,
                   position,
                   size,

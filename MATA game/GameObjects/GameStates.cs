@@ -69,14 +69,14 @@ namespace MATA_game
             }
             previousMouseState = mouseState;
         }
+
         public void UpdateMenu()
         {
 
         }
 
         public void UpdateGame(GameTime gameTime)
-        {
-            
+        {    
             player.Update(gameTime);
             
             player.GetInput(gameTime);
@@ -97,6 +97,8 @@ namespace MATA_game
             {
                 isGame = true;
                 
+                player.Draw(gameTime, spriteBatch, player.m_texture);
+
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
                 GameObject HealthBar = new GameObject(player.healthBar, player.healthPosition, new Vector2(1200, 400), 0, healthScale);

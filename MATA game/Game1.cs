@@ -10,7 +10,7 @@ namespace MATA_game
     /// <summary>
     /// Name: 
     /// Description: 
-    /// Version: 0.1.5.48 (Developmental Stages)
+    /// Version: 0.1.6.50 (Developmental Stages)
     /// Genre: 2D Platformer
     /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
     /// Game Engine: MonoGame/XNA
@@ -23,8 +23,9 @@ namespace MATA_game
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        DevLogging Debug;
+        public DevLogging Debug;
 
+        GameObject gameObject;
         GameStates gameStates;
         PlayerClass player;
         Camera camera;
@@ -57,14 +58,16 @@ namespace MATA_game
         float res_ScreenScaleUpDifference;
         float res_ScreenScaleDownDifference;
         bool FullScreen;
+        public static Game1 theGame;
         #endregion
 
         public Game1()
         {
+            theGame = this;
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             DateTime thisDay = DateTime.Now;
-            GameVersionBuild = "v0.1.5.48 ";
+            GameVersionBuild = "v0.1.6.50 ";
             Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -117,12 +120,15 @@ namespace MATA_game
         {
             healthBar = new HealthBar(Content);
             gameStates = new GameStates();
-            player = new PlayerClass(spawningPosition);
+            player = new PlayerClass(this, spawningPosition);
+            gameObject = new GameObject(this);
         }
         
         void InitilizeProperties()
         {
             gameStates.Game = this;
+            gameObject.Debug = Debug;
+            gameObject.Game = this;
             player.Game = this;
         }
 
@@ -162,8 +168,8 @@ namespace MATA_game
             gameStates.resumeButton = Content.Load<Texture2D>("Buttons/resume");
             healthBar.font = Content.Load<SpriteFont>("Font/scoreFont");
             background = Content.Load<Texture2D>("Background/background");
-            player.m_texture = Content.Load<Texture2D>("xeonsheet");
-            player.sTexture = Content.Load<Texture2D>("xeonsheet");
+            player.m_texture = Content.Load<Texture2D>("Player");
+            //player.sTexture = Content.Load<Texture2D>("xeonsheet");
             blackScreen = Content.Load<Texture2D>("Black screen");
             Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
@@ -194,6 +200,13 @@ namespace MATA_game
             }
         }
 
+        void DrawRectangle(Rectangle coords, Color color)
+        {
+            var rect = new Texture2D(GraphicsDevice, 1, 1);
+            rect.SetData(new[] { color });
+            spriteBatch.Draw(rect, coords, color);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -205,19 +218,19 @@ namespace MATA_game
             if (level != null)
             {
                 level.player = player;
-            }
 
+                healthBar.Update();
+            }
+            gameStates.level = level;
             gameStates.healthBar = healthBar;
             gameStates.graphics = graphics;
             gameStates.player = player;
-            gameStates.level = level;
+            
             camera.healthBar = healthBar;
             camera.Update(player.m_position, healthBar.healthPosition);
             
             gameStates.camera = camera;
             gameStates.Update(gameTime);
-            
-            healthBar.Update();
 
             KeyboardState newKeyState = Keyboard.GetState();
             if(newKeyState.IsKeyDown(Keys.Home) && oldKeyState.IsKeyUp(Keys.Home))
@@ -237,10 +250,18 @@ namespace MATA_game
 
             spriteBatch.Begin( SpriteSortMode.Deferred,BlendState.AlphaBlend, null,null, null,null, camera.viewMatrix);
             //  spriteBatch.Draw(background, Vector2.Zero, Color.White);
+
+            //if (level != null)
+            //{
+            //    Rectangle tempRect = new Rectangle((int)player.m_position.X, (int)player.m_position.Y, 100, 100);
+            //    Debug.WriteToFile("player Position: " + player.m_position.ToString(), false, false);
+            //    DrawRectangle(tempRect, Color.Black);
+            //}
+
             if (gameStates.isGame == true && level != null)
             {
-                player.Draw(gameTime, spriteBatch, player.m_texture);
                 level.Draw(gameTime, spriteBatch);
+                player.Draw(gameTime, spriteBatch, player.m_texture);
             }
             
             spriteBatch.End();
@@ -269,6 +290,7 @@ namespace MATA_game
                 }
                 
             }
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

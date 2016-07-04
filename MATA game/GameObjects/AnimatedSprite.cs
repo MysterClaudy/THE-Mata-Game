@@ -24,7 +24,8 @@ namespace MATA_game
             set { timetoUpdate = (1f / value); }
         }
 
-        public AnimatedSprite(Vector2 position)
+        public AnimatedSprite(Game1 game, Vector2 position)
+            : base(game)
         {
             sPosition = position;
         }

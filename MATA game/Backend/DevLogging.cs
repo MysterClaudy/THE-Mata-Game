@@ -8,7 +8,7 @@ namespace TrebleGameUtils
     /// <summary>
     /// Debugging for the next generation! Coming to a game near you!
     /// </summary>
-    class DevLogging // Version 6
+    public class DevLogging // Version 6
     {
         public SpriteFont textFont;
 
