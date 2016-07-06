@@ -26,7 +26,7 @@ namespace MATA_game
             get { return GraphicsDeviceManager.DefaultBackBufferHeight; }
         }
 
-        public void Update(Vector2 playerPosition, Vector2 healthBarPos)
+        public void Update(Vector2 playerPosition)
         {
             position.X = playerPosition.X - (ScreenWidth / 2);
             position.Y = playerPosition.Y - (ScreenHeight / 2);            

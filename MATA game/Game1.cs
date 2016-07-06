@@ -168,10 +168,10 @@ namespace MATA_game
             gameStates.resumeButton = Content.Load<Texture2D>("Buttons/resume");
             healthBar.font = Content.Load<SpriteFont>("Font/scoreFont");
             background = Content.Load<Texture2D>("Background/background");
-            player.m_texture = Content.Load<Texture2D>("Player");
-            //player.sTexture = Content.Load<Texture2D>("xeonsheet");
+           //  player.m_texture = Content.Load<Texture2D>("Player");
+           player.sTexture = Content.Load<Texture2D>("PlayerSpriteSheet");
             blackScreen = Content.Load<Texture2D>("Black screen");
-            Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
+            Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");               
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -227,7 +227,7 @@ namespace MATA_game
             gameStates.player = player;
             
             camera.healthBar = healthBar;
-            camera.Update(player.m_position, healthBar.healthPosition);
+            camera.Update(player.m_position);
             
             gameStates.camera = camera;
             gameStates.Update(gameTime);
