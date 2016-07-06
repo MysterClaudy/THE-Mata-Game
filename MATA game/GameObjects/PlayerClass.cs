@@ -26,7 +26,7 @@ namespace MATA_game
             AddAnimation(3, 48, 1, "Up", 32, 48, new Vector2(0, 0));
             AddAnimation(1, 48, 1, "UpIdle", 32, 48, new Vector2(0, 0));
             AddAnimation(3, 48, 1, "Down", 32, 48, new Vector2(0, 0));
-            AddAnimation(1, 48, 1, "DownIdle", 32, 48, new Vector2(0, 0));
+            AddAnimation(1, 48, 1, "Idle", 32, 48, new Vector2(0, 0));
 
             PlayAnimation("Idle");
         }
