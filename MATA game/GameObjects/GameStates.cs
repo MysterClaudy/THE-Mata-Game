@@ -96,11 +96,6 @@ namespace MATA_game
             if (gameState == GameState.Game)
             {
                 isGame = true;
-<<<<<<< HEAD
-                
-=======
-
->>>>>>> 62327adc86f3caec93b68a98d24e3dd09a280e10
                 player.Draw(spriteBatch);
 
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);
