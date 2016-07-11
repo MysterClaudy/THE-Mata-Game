@@ -227,7 +227,7 @@ namespace MATA_game
             gameStates.player = player;
             
             camera.healthBar = healthBar;
-            camera.Update(player.m_position);
+            camera.Update(player.sPosition);
             
             gameStates.camera = camera;
             gameStates.Update(gameTime);
@@ -261,7 +261,7 @@ namespace MATA_game
             if (gameStates.isGame == true && level != null)
             {
                 level.Draw(gameTime, spriteBatch);
-                player.Draw(gameTime, spriteBatch, player.m_texture);
+                player.Draw(gameTime, spriteBatch, player.sTexture);
             }
             
             spriteBatch.End();

@@ -97,6 +97,7 @@ namespace MATA_game
             {
                 isGame = true;
 
+
                 player.Draw(spriteBatch);
 
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);

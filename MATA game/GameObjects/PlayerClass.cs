@@ -51,7 +51,7 @@ namespace MATA_game
         public override void Update(GameTime gameTime)
         {
 
-            sDirection = Vector2.Zero;
+            sPosition += sDirection;
             
             m_position += m_velocity;
             if (m_texture == null)
@@ -63,6 +63,7 @@ namespace MATA_game
         public void GetInput(GameTime gameTime)
         {
             m_velocity = new Vector2(0);
+            sDirection = new Vector2(0);
             
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -84,6 +85,7 @@ namespace MATA_game
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 m_velocity = new Vector2(0, -3);
+                sDirection += new Vector2(0, 3);
                 PlayAnimation("Up");
                
             }
@@ -91,6 +93,7 @@ namespace MATA_game
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 m_velocity = new Vector2(0, 3);
+                sDirection += new Vector2(0, 3);
                 PlayAnimation("Down");
         
             }
@@ -98,19 +101,23 @@ namespace MATA_game
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 m_velocity = new Vector2(-3, -3);
+                sDirection += new Vector2(-3, -3);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 m_velocity = new Vector2(3, -3);
+                sDirection += new Vector2(3, -3);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 m_velocity = new Vector2(-3, 3);
+                sDirection += new Vector2(-3, 3);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 m_velocity = new Vector2(3, 3);
+                sDirection += new Vector2(3, 3);
             }
         }
 

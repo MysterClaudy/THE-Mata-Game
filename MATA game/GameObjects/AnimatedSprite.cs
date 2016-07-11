@@ -9,7 +9,7 @@ namespace MATA_game
         public enum myDirection { None, Left, Right, Up, Down};
         protected myDirection currentDir = myDirection.None;
         public Texture2D sTexture;
-        protected Vector2 sPosition;
+        public Vector2 sPosition;
         private int frameIndex;
         private double timeElapsed;
         private double timetoUpdate;
