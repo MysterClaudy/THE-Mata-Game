@@ -46,6 +46,15 @@ namespace MATA_game
             {
                 
             }
+
+            if (m_position.Y <= 0)
+            {
+                m_position.Y = 0;
+            }
+            if (m_position.X <= 0)
+            {
+                m_position.X = 0;
+            }
         }
 
         public void GetInput(GameTime gameTime)

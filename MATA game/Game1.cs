@@ -11,7 +11,7 @@ namespace MATA_game
     /// <summary>
     /// Name: 
     /// Description: 
-    /// Version: 0.1.6.50 (Developmental Stages)
+    /// Version: 0.1.7.55 (Developmental Stages)
     /// Genre: 2D Platformer
     /// Developer: Rohan Renu (Myster-Claude), Tony Lu (CroakyEngine), and Titus Huang (Treble Sketch/ILM126)
     /// Game Engine: MonoGame/XNA
@@ -72,7 +72,7 @@ namespace MATA_game
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             DateTime thisDay = DateTime.Now;
-            GameVersionBuild = "v0.1.6.50 ";
+            GameVersionBuild = "v0.1.7.55 ";
             Debug.WriteToFile("Starting The MATA Game " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -179,7 +179,7 @@ namespace MATA_game
             Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
             burstTexture = Content.Load<Texture2D>("Particles/spark");
-            emitter = Emitter.CreateBurstEmitter(burstTexture, new Vector2(0, 0));
+            //emitter = Emitter.CreateBurstEmitter(burstTexture, new Vector2(0, 0));
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -249,9 +249,9 @@ namespace MATA_game
             }
             oldKeyState = newKeyState;
 
-            Vector2 mousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-            emitter.position = mousePos;
-            emitter.Update(gameTime);
+            //Vector2 mousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            //emitter.position = mousePos;
+            //emitter.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -275,7 +275,7 @@ namespace MATA_game
                 level.Draw(gameTime, spriteBatch);
                // player.Draw(gameTime, spriteBatch, player.m_texture);
             }
-            emitter.Draw(spriteBatch);
+            //emitter.Draw(spriteBatch);
             spriteBatch.End();
             
             spriteBatch.Begin();
