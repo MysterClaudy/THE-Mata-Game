@@ -84,7 +84,7 @@ namespace MATA_game
 
             CentreScreen = new Vector2(graphics.PreferredBackBufferWidth / 2,
                                             graphics.PreferredBackBufferHeight / 2);
-            a
+            
             CurrentScreenSize = new Vector2(graphics.PreferredBackBufferWidth,
                                                 graphics.PreferredBackBufferHeight);
 
