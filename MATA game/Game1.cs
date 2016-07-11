@@ -84,7 +84,7 @@ namespace MATA_game
 
             CentreScreen = new Vector2(graphics.PreferredBackBufferWidth / 2,
                                             graphics.PreferredBackBufferHeight / 2);
-
+            
             CurrentScreenSize = new Vector2(graphics.PreferredBackBufferWidth,
                                                 graphics.PreferredBackBufferHeight);
 
@@ -129,9 +129,9 @@ namespace MATA_game
             gameObject = new GameObject(this);
         }
         
-        void InitilizeProperties()
+        void InitilizeProperties()  
         {
-            gameStates.Game = this;
+            gameStates.Game = this; 
             gameObject.Debug = Debug;
             gameObject.Game = this;
             player.Game = this;

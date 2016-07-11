@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MATA_game
 {
@@ -9,10 +10,16 @@ namespace MATA_game
     {
         #region Properties
         public Game1 Game;
-
+        public Level level;
         #endregion
 
         #region Collectors
+
+        public Level Level
+        {
+            get { return level; }
+        }
+
         public PlayerClass(Game1 game, Vector2 position)
             : base(game, position)
         {
@@ -39,7 +46,7 @@ namespace MATA_game
         
         public override void Update(GameTime gameTime)
         {
-
+            HandleCollision();
             sDirection = Vector2.Zero;
             m_position += m_velocity;
             if (m_texture == null)
@@ -110,6 +117,55 @@ namespace MATA_game
             {
                 
             }
+        }
+        private Rectangle localBounds;
+
+        public Rectangle BoundingRectangle
+        {
+            get
+            {
+                int left = (int)Math.Round(sPosition.X - m_origin.X) + localBounds.X;
+                int top = (int)Math.Round(sPosition.Y - m_origin.Y) + localBounds.Y;
+
+                return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+            }
+        }
+
+        private void HandleCollision()
+        {
+            Rectangle bounds = BoundingRectangle;
+
+            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
+            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+            for(int y = topTile; y <= bottomTile; y++)
+            {
+                for(int x = leftTile; x <= rightTile; x++)
+                {
+                    TileCollision collision = level.GetCollision(x, y);
+
+                    if(collision != TileCollision.Passable)
+                    {
+                        Rectangle tileBounds = level.GetBounds(x, y);
+                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+                        if(depth != Vector2.Zero)
+                        {
+                            float absDepthX = Math.Abs(depth.X);
+                            float absDepthY = Math.Abs(depth.Y);
+                            
+                            if(collision == TileCollision.Impassable)
+                            {
+                                sPosition = new Vector2(sPosition.X + depth.X, sPosition.Y);
+                                bounds = BoundingRectangle;
+                            }
+
+                        }
+                    }
+                }
+            }
+            
         }
         #endregion
     }
