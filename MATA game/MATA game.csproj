@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="GameObjects\AABB.cs" />
     <Compile Include="GameObjects\AnimatedSprite.cs" />
+    <Compile Include="GameObjects\ParticleSystem.cs" />
     <Compile Include="UI\Camera.cs" />
     <Compile Include="Backend\DevLogging.cs" />
     <Compile Include="GameObjects\EnemyClass.cs" />
@@ -91,6 +92,7 @@
     <Content Include="Content\Levels\1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Particles\spark.png" />
     <Content Include="Content\Player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

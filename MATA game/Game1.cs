@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
 using TrebleGameUtils;
+using AIEResources.Particles;
 
 namespace MATA_game
 {
@@ -31,6 +32,7 @@ namespace MATA_game
         Camera camera;
         HealthBar healthBar;
         Level level;
+        Emitter emitter;
 
         Texture2D background;
         private int levelIndex = -1;
@@ -39,6 +41,9 @@ namespace MATA_game
         KeyboardState oldKeyState;
         bool isloadingLevel = false;
         Texture2D blackScreen;
+        public Texture2D burstTexture;
+        const int numEmitterSettings = 3;
+        int emitterSettingsID = 0;
 
         string GameVersionBuild;
         public Vector2 CentreScreen;
@@ -173,6 +178,9 @@ namespace MATA_game
             blackScreen = Content.Load<Texture2D>("Black screen");
             Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
+            burstTexture = Content.Load<Texture2D>("Particles/spark");
+            emitter = Emitter.CreateBurstEmitter(burstTexture, new Vector2(0, 0));
+
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -241,12 +249,16 @@ namespace MATA_game
             }
             oldKeyState = newKeyState;
 
+            Vector2 mousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            emitter.position = mousePos;
+            emitter.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin( SpriteSortMode.Deferred,BlendState.AlphaBlend, null,null, null,null, camera.viewMatrix);
             //  spriteBatch.Draw(background, Vector2.Zero, Color.White);
@@ -261,9 +273,9 @@ namespace MATA_game
             if (gameStates.isGame == true && level != null)
             {
                 level.Draw(gameTime, spriteBatch);
-                player.Draw(gameTime, spriteBatch, player.m_texture);
+               // player.Draw(gameTime, spriteBatch, player.m_texture);
             }
-            
+            emitter.Draw(spriteBatch);
             spriteBatch.End();
             
             spriteBatch.Begin();
@@ -290,7 +302,6 @@ namespace MATA_game
                 }
                 
             }
-
             spriteBatch.End();
             base.Draw(gameTime);
         }
