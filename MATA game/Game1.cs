@@ -79,7 +79,7 @@ namespace MATA_game
 
             CentreScreen = new Vector2(graphics.PreferredBackBufferWidth / 2,
                                             graphics.PreferredBackBufferHeight / 2);
-
+            a
             CurrentScreenSize = new Vector2(graphics.PreferredBackBufferWidth,
                                                 graphics.PreferredBackBufferHeight);
 
@@ -124,9 +124,9 @@ namespace MATA_game
             gameObject = new GameObject(this);
         }
         
-        void InitilizeProperties()
+        void InitilizeProperties()  
         {
-            gameStates.Game = this;
+            gameStates.Game = this; 
             gameObject.Debug = Debug;
             gameObject.Game = this;
             player.Game = this;
@@ -169,7 +169,7 @@ namespace MATA_game
             healthBar.font = Content.Load<SpriteFont>("Font/scoreFont");
             background = Content.Load<Texture2D>("Background/background");
             player.m_texture = Content.Load<Texture2D>("Player");
-            //player.sTexture = Content.Load<Texture2D>("xeonsheet");
+            player.sTexture = Content.Load<Texture2D>("xeonsheet");
             blackScreen = Content.Load<Texture2D>("Black screen");
             Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
