@@ -125,7 +125,8 @@ namespace MATA_game
         {
             healthBar = new HealthBar(Content);
             gameStates = new GameStates();
-            player = new PlayerClass(this, spawningPosition);
+            //player = new PlayerClass(this, spawningPosition);
+            player = new PlayerClass(null, null, spawningPosition, new Vector2(318, 513), 0, 0.15f, 3);
             gameObject = new GameObject(this);
         }
         
@@ -174,7 +175,7 @@ namespace MATA_game
             healthBar.font = Content.Load<SpriteFont>("Font/scoreFont");
             background = Content.Load<Texture2D>("Background/background");
             player.m_texture = Content.Load<Texture2D>("Player");
-            player.sTexture = Content.Load<Texture2D>("xeonsheet");
+           // player.sTexture = Content.Load<Texture2D>("xeonsheet");
             blackScreen = Content.Load<Texture2D>("Black screen");
             Debug.textFont = Content.Load<SpriteFont>("Font/scoreFont");
 
@@ -229,6 +230,7 @@ namespace MATA_game
 
                 healthBar.Update();
             }
+            player.level = level;
             gameStates.level = level;
             gameStates.healthBar = healthBar;
             gameStates.graphics = graphics;

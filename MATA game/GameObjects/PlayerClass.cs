@@ -6,7 +6,7 @@ using System;
 
 namespace MATA_game
 {
-    class PlayerClass : AnimatedSprite
+    class PlayerClass : MobileObject
     {
         #region Properties
         public Game1 Game;
@@ -20,48 +20,48 @@ namespace MATA_game
             get { return level; }
         }
 
-        public PlayerClass(Game1 game, Vector2 position)
-            : base(game, position)
+        public PlayerClass(Game1 game, Texture2D texture = null
+            , Vector2 position = new Vector2()
+            , Vector2 size = new Vector2()
+            , float rotation = 0f
+            , float scale = 1f,
+            float speed = 3.0f)
+            : base(game,
+                  texture
+                  , position
+                  , size
+                  , rotation
+                  , scale
+                  , speed)
         {
-            
-            framesPerSecond = 2;
-
-            AddAnimation(3, 170, 1, "Left", 71, 48, new Vector2(0, 0));
-            AddAnimation(1, 48, 0, "LeftIdle", 71, 80, new Vector2(0, 0));
-            AddAnimation(3, 48, 1, "Right", 32, 48, new Vector2(0, 0));
-            AddAnimation(1, 48, 1, "RightIdle", 32, 48, new Vector2(0, 0));
-            AddAnimation(3, 48, 1, "Up", 32, 48, new Vector2(0, 0));
-            AddAnimation(1, 48, 1, "UpIdle", 32, 48, new Vector2(0, 0));
-            AddAnimation(3, 48, 1, "Down", 32, 48, new Vector2(0, 0));
-            AddAnimation(1, 48, 1, "Idle", 32, 48, new Vector2(0, 0));
-
-            PlayAnimation("Idle");
+            m_size = size;
+            position = m_position;
         }
 
         void Initialize()
         {
-            maxLimit = new Vector2(Game.CurrentScreenSize.X + (m_size.X / 2), Game.CurrentScreenSize.Y + (m_size.Y / 2));
-            minLimit = new Vector2(0 - (m_size.X / 2), 0 - (m_size.Y / 2));
+           // maxLimit = new Vector2(Game.CurrentScreenSize.X + (m_size.X / 2), Game.CurrentScreenSize.Y + (m_size.Y / 2));
+            //minLimit = new Vector2(0 - (m_size.X / 2), 0 - (m_size.Y / 2));
         }
         
         public override void Update(GameTime gameTime)
         {
-            HandleCollision();
-            sDirection = Vector2.Zero;
+            HandleCollision();  
+           
             m_position += m_velocity;
             if (m_texture == null)
             {
                 
             }
 
-            if (m_position.Y <= 0)
-            {
-                m_position.Y = 0;
-            }
-            if (m_position.X <= 0)
-            {
-                m_position.X = 0;
-            }
+            //if (m_position.Y <= 0)
+            //{
+            //    m_position.Y = 0;
+            //}
+            //if (m_position.X <= 0)
+            //{
+            //    m_position.X = 0;
+            //}
         }
 
         public void GetInput(GameTime gameTime)
@@ -71,27 +71,19 @@ namespace MATA_game
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 m_velocity = new Vector2(-5, 0);
-                PlayAnimation("Left");
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 m_velocity = new Vector2(5, 0);
-                PlayAnimation("Right");
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 m_velocity = new Vector2(0, -5);
-                PlayAnimation("Up");
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 m_velocity = new Vector2(0, 5);
-                PlayAnimation("Down");
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 m_velocity = new Vector2(-5, -5);
@@ -111,21 +103,14 @@ namespace MATA_game
             }
         }
 
-        public override void AnimationDone(string animation)
-        {
-            if (animation.Contains("Attack"))
-            {
-                
-            }
-        }
         private Rectangle localBounds;
 
         public Rectangle BoundingRectangle
         {
             get
             {
-                int left = (int)Math.Round(sPosition.X - m_origin.X) + localBounds.X;
-                int top = (int)Math.Round(sPosition.Y - m_origin.Y) + localBounds.Y;
+                int left = (int)Math.Round(m_position.X - m_origin.X) + localBounds.X;
+                int top = (int)Math.Round(m_position.Y - m_origin.Y) + localBounds.Y;
 
                 return new Rectangle(left, top, localBounds.Width, localBounds.Height);
             }
@@ -157,7 +142,7 @@ namespace MATA_game
                             
                             if(collision == TileCollision.Impassable)
                             {
-                                sPosition = new Vector2(sPosition.X + depth.X, sPosition.Y);
+                                m_position = new Vector2(m_position.X + depth.X, m_position.Y); 
                                 bounds = BoundingRectangle;
                             }
 

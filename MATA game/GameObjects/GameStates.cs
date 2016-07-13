@@ -96,7 +96,7 @@ namespace MATA_game
             if (gameState == GameState.Game)
             {
                 isGame = true;
-                player.Draw(spriteBatch);
+                player.Draw(gameTime, spriteBatch);
 
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
