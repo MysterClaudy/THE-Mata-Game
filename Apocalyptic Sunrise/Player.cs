@@ -85,6 +85,7 @@ namespace Apocalyptic_Sunrise
             if (!attacking)
             {
                 mySpeed = 100;
+                FramesPerSecond = 10;
                 if (keyState.IsKeyDown(Keys.W))
                 {
                     //Move char Up
