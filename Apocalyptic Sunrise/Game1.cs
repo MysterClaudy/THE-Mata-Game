@@ -32,7 +32,7 @@ namespace Apocalyptic_Sunrise
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
             DateTime thisDay = DateTime.Now;
-            GameVersionBuild = "v0.2.2.67 ";
+            GameVersionBuild = "v0.2.2.71 ";
             Debug.WriteToFile("Starting The Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
 
             graphics = new GraphicsDeviceManager(this);
@@ -63,7 +63,7 @@ namespace Apocalyptic_Sunrise
         {
             levelIndex = (levelIndex + 1);//  % 1;
 
-            Debug.WriteToFile("Started loading level", true, false);
+            Debug.WriteToFile("Started loading level" + levelIndex, true, false);
 
             bool flag = level != null;
             if (flag)
