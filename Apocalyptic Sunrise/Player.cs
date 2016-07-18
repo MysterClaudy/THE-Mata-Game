@@ -25,12 +25,17 @@ namespace Apocalyptic_Sunrise
         {
             get { return level; }
         }
-
+        public bool IsOnGround
+        {
+            get { return isOnGround; }
+        }
+        bool isOnGround;
         public bool IsAlive
         {
             get { return isAlive; }
         }
         bool isAlive;
+        private float previousBottom;
         public Player(Vector2 position) : base(position)
         {
             FramesPerSecond = 10;
@@ -242,8 +247,41 @@ namespace Apocalyptic_Sunrise
                     TileCollision collision = Level.GetCollision(x, y);
                     if (collision != TileCollision.Passable)
                     {
-                        
-                       
+
+
+                        Rectangle tileBounds = Level.GetBounds(x, y);
+                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+                        if (depth != Vector2.Zero)
+                        {
+                            float absDepthX = Math.Abs(depth.X);
+                            float absDepthY = Math.Abs(depth.Y);
+
+                            // Resolve the collision along the shallow axis.
+                            if (absDepthY < absDepthX || collision == TileCollision.Platform)
+                            {
+                                // If we crossed the top of a tile, we are on the ground.
+                                if (previousBottom <= tileBounds.Top)
+                                    isOnGround = true;
+
+                                // Ignore platforms, unless we are on the ground.
+                                if (collision == TileCollision.Impassable || IsOnGround)
+                                {
+                                    // Resolve the collision along the Y axis.
+                                    sPosition = new Vector2(sPosition.X, sPosition.Y + depth.Y);
+
+                                    // Perform further collisions with the new bounds.
+                                    bounds = BoundingRectangle;
+                                }
+                            }
+                            else if (collision == TileCollision.Impassable) // Ignore platforms.
+                            {
+                                // Resolve the collision along the X axis.
+                                sPosition = new Vector2(sPosition.X + depth.X, sPosition.Y);
+
+                                // Perform further collisions with the new bounds.
+                                bounds = BoundingRectangle;
+                            }
+                        }
                     }
                 }
             }

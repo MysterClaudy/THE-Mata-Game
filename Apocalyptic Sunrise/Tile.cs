@@ -11,7 +11,8 @@ namespace Apocalyptic_Sunrise
     public enum TileCollision
     {
         Passable = 0,
-        Impassable = 1
+        Impassable = 1,
+        Platform = 2
     }
     public struct Tile
     {
