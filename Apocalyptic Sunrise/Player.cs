@@ -60,7 +60,6 @@ namespace Apocalyptic_Sunrise
         public override void Update(GameTime gameTime)
         {
             sDirection = Vector2.Zero;
-            HandleCollision();
             HandleInput(Keyboard.GetState());
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sDirection *= mySpeed;
@@ -219,74 +218,9 @@ namespace Apocalyptic_Sunrise
                 attacking = false;
             }
         }
-        private Rectangle localBounds;
-        public Rectangle BoundingRectangle
-        {
-            get
-            {
-                int left = (int)Math.Round(sPosition.X -  m_origin.X) + localBounds.X;
-                int top = (int)Math.Round(sPosition.Y - m_origin.Y) + localBounds.Y;
-
-                return new Rectangle(left, top, localBounds.Width, localBounds.Height);
-            }
-        }
-       
-        public void HandleCollision()
-        {
-            Rectangle bounds = BoundingRectangle;
-            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
-            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
-
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    // If this tile is collidable,
-                    TileCollision collision = Level.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
-                    {
-
-
-                        Rectangle tileBounds = Level.GetBounds(x, y);
-                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
-                        if (depth != Vector2.Zero)
-                        {
-                            float absDepthX = Math.Abs(depth.X);
-                            float absDepthY = Math.Abs(depth.Y);
-
-                            // Resolve the collision along the shallow axis.
-                            if (absDepthY < absDepthX || collision == TileCollision.Platform)
-                            {
-                                // If we crossed the top of a tile, we are on the ground.
-                                if (previousBottom <= tileBounds.Top)
-                                    isOnGround = true;
-
-                                // Ignore platforms, unless we are on the ground.
-                                if (collision == TileCollision.Impassable || IsOnGround)
-                                {
-                                    // Resolve the collision along the Y axis.
-                                    sPosition = new Vector2(sPosition.X, sPosition.Y + depth.Y);
-
-                                    // Perform further collisions with the new bounds.
-                                    bounds = BoundingRectangle;
-                                }
-                            }
-                            else if (collision == TileCollision.Impassable) // Ignore platforms.
-                            {
-                                // Resolve the collision along the X axis.
-                                sPosition = new Vector2(sPosition.X + depth.X, sPosition.Y);
-
-                                // Perform further collisions with the new bounds.
-                                bounds = BoundingRectangle;
-                            }
-                        }
-                    }
-                }
-            }
+        
 
            
-        }
+        
     }
 }

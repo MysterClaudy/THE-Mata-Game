@@ -107,7 +107,8 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.Game)
             {
-                level.Draw(gameTime, spriteBatch);
+                //level.Draw(gameTime, spriteBatch);
+                player.Draw(spriteBatch);
             }
 
             if (gameState == GameState.PauseMenu)

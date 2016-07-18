@@ -36,41 +36,20 @@ namespace Apocalyptic_Sunrise
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
             gameStates = new GameStates();
-            LoadNextLevel();
+            
             player = new Player(new Vector2(100,100));
             camera = new Camera();
             healthBar = new HealthBar(Content);
             base.Initialize();
         }
 
-        public void LoadNextLevel()
-        {
-            levelIndex = (levelIndex + 1);//  % 1;
-            bool flag = level != null;
-            if (flag)
-            {
-                level.Dispose();
-            }
-            string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
-            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-            {
-                this.level = new Level(base.Services, fileStream, levelIndex);
-            }
-            if (levelIndex == 0)
-            {
-                spawningPosition = new Vector2(700, 300);
-            }
-            if (levelIndex == 1)
-            {
-                player.m_position = new Vector2(100, 100);
-            }
-        }
+       
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.player = player; 
+            
         }
 
         protected override void UnloadContent()
@@ -82,7 +61,7 @@ namespace Apocalyptic_Sunrise
             gameStates.player = player;
             player.level = level;
             gameStates.level = level;
-            level.graphics = graphics;
+            
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   
