@@ -1,13 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.IO;
+using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -18,34 +17,54 @@ namespace Apocalyptic_Sunrise
         Level level;
         HealthBar healthBar;
         public static Game1 theGame;
-        private int levelIndex = -1;
-        private const int numberOfLevels = 2;
+        public DevLogging Debug;
+
+        int levelIndex = -1;
+        const int numberOfLevels = 2;
         Vector2 spawningPosition;
+
+        string GameVersionBuild;
+
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
-            
-            Content.RootDirectory = "Content";
             theGame = this;
+            Debug = new DevLogging();
+            File.Delete(Debug.GetCurrentDirectory());
+            Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
+            DateTime thisDay = DateTime.Now;
+            GameVersionBuild = "v0.2.2.67 ";
+            Debug.WriteToFile("Starting The Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
+
+            graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.ApplyChanges();
+
+            Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
+            Debug.WriteToFile("Started Initializing Game", true, false);
+
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.ApplyChanges();
+
             gameStates = new GameStates();
-            LoadNextLevel();
-            player = new Player(new Vector2(100,100));
+            gameStates.Game = theGame;
+            player = new Player(new Vector2(100, 100));
             camera = new Camera();
             healthBar = new HealthBar(Content);
             base.Initialize();
+
+            Debug.WriteToFile("Finished Initializing Game", true, false);
         }
 
         public void LoadNextLevel()
         {
             levelIndex = (levelIndex + 1);//  % 1;
+
+            Debug.WriteToFile("Started loading level", true, false);
+
             bool flag = level != null;
             if (flag)
             {
@@ -64,13 +83,21 @@ namespace Apocalyptic_Sunrise
             {
                 player.m_position = new Vector2(100, 100);
             }
+
+            level.player = player;
+
+            Debug.WriteToFile("Finishied loading level " + levelIndex, true, false);
         }
+
         protected override void LoadContent()
         {
+            Debug.WriteToFile("Started Loading Game Textures", true, false);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.player = player; 
+
+            Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
         protected override void UnloadContent()
@@ -79,16 +106,23 @@ namespace Apocalyptic_Sunrise
 
         protected override void Update(GameTime gameTime)
         {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Debug.WriteToFile("Ending Game...", true, false);
+                Exit();
+            }
+
             gameStates.player = player;
-            player.level = level;
-            gameStates.level = level;
-            level.graphics = graphics;
+            if (level != null)
+            {
+                player.level = level;
+                gameStates.level = level;
+                level.graphics = graphics;
+            }
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   
             gameStates.Update(gameTime);
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             base.Update(gameTime);
         }

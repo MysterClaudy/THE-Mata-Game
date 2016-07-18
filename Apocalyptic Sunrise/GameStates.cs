@@ -105,7 +105,7 @@ namespace Apocalyptic_Sunrise
                 
             }
 
-            if (gameState == GameState.Game)
+            if (gameState == GameState.Game && level != null)
             {
                 level.Draw(gameTime, spriteBatch);
             }
@@ -154,6 +154,7 @@ namespace Apocalyptic_Sunrise
                 if (mouseClickedRect.Intersects(startButtonRect))
                 {
                     gameState = GameState.Game;
+                    Game.LoadNextLevel();
                 }
 
                 else if (mouseClickedRect.Intersects(exitButtonRect))
