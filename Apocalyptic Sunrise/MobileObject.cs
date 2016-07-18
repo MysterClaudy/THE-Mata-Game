@@ -40,7 +40,6 @@ namespace Apocalyptic_Sunrise
             m_position.Y += m_velocity.Y * m_speed;
             m_position.X += m_velocity.X * m_speed;
             UpdateBounds();
-
         }
     }
 }

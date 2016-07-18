@@ -13,6 +13,7 @@ namespace Apocalyptic_Sunrise
         Passable = 0,
         Impassable = 1
     }
+
     public struct Tile
     {
         public Texture2D texture;
@@ -27,7 +28,6 @@ namespace Apocalyptic_Sunrise
         {
             texture = Texture;
             collision = Collision;
-
         }
     }
 }

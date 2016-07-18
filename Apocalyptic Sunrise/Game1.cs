@@ -32,7 +32,7 @@ namespace Apocalyptic_Sunrise
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
             DateTime thisDay = DateTime.Now;
-            GameVersionBuild = "v0.2.2.71 ";
+            GameVersionBuild = "v0.2.2.72 ";
             Debug.WriteToFile("Starting The Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
 
             graphics = new GraphicsDeviceManager(this);
