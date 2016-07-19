@@ -18,7 +18,6 @@ namespace Apocalyptic_Sunrise
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("playerSheet");
-
         }
 
         public Level Level
@@ -30,7 +29,9 @@ namespace Apocalyptic_Sunrise
         {
             get { return isAlive; }
         }
+
         bool isAlive;
+
         public Player(Vector2 position) : base(position)
         {
             FramesPerSecond = 10;
@@ -203,7 +204,6 @@ namespace Apocalyptic_Sunrise
                 }
             }
             currentDir = myDirection.none;
-
         }
 
        
@@ -243,13 +243,10 @@ namespace Apocalyptic_Sunrise
                     TileCollision collision = Level.GetCollision(x, y);
                     if (collision != TileCollision.Passable)
                     {
-                        
-                       
+                          
                     }
                 }
             }
-
-           
         }
     }
 }
