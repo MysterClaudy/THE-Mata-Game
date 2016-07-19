@@ -107,7 +107,7 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.Game)
             {
-                //level.Draw(gameTime, spriteBatch);
+                level.map.Draw(spriteBatch);
                 player.Draw(spriteBatch);
             }
 
@@ -183,3 +183,4 @@ namespace Apocalyptic_Sunrise
         #endregion
     }
 }
+

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 
+
 namespace Apocalyptic_Sunrise
 {
     /// <summary>
@@ -21,6 +22,8 @@ namespace Apocalyptic_Sunrise
         private int levelIndex = -1;
         private const int numberOfLevels = 2;
         Vector2 spawningPosition;
+
+            
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,19 +39,22 @@ namespace Apocalyptic_Sunrise
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
             gameStates = new GameStates();
-            
+            level = new Level();
             player = new Player(new Vector2(100,100));
             camera = new Camera();
             healthBar = new HealthBar(Content);
+            //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
             base.Initialize();
         }
 
        
         protected override void LoadContent()
         {
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
+            level.LoadContent(Content);
             
         }
 
@@ -74,9 +80,10 @@ namespace Apocalyptic_Sunrise
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue); 
+            GraphicsDevice.Clear(Color.Black);           
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
+            
             gameStates.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
