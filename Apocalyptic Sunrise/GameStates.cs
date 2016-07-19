@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apocalyptic_Sunrise
 {
@@ -112,6 +108,7 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.PauseMenu)
             {
+
             }
         }
 
@@ -126,9 +123,6 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.Game)
             {
-             
-
-
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
                 GameObject HealthBar = new GameObject(player.healthBar, player.healthPosition, new Vector2(1200, 400), 0, healthScale);
