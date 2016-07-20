@@ -19,7 +19,7 @@ namespace Apocalyptic_Sunrise
         private double timeElapsed;
         private double timeToUpdate;
         protected string currentAnimation;
-        protected Vector2 sDirection = Vector2.Zero;
+        public Vector2 sDirection = Vector2.Zero;
 
         private Dictionary<string, Rectangle[]> sAnimations = new Dictionary<string, Rectangle[]>();
         private Dictionary<string, Vector2> sOffsets = new Dictionary<string, Vector2>();

@@ -27,7 +27,7 @@ namespace Apocalyptic_Sunrise
         private int levelIndex = -1;
         private const int numberOfLevels = 2;
         Vector2 spawningPosition;
-            
+
         public Game1()
         {
             Debug = new DevLogging();
@@ -42,7 +42,7 @@ namespace Apocalyptic_Sunrise
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
-
+            
             theGame = this;
             IsMouseVisible = true;
         }
@@ -61,7 +61,7 @@ namespace Apocalyptic_Sunrise
 
             Debug.WriteToFile("Finished Initializing Game", true, false);
         }
-       
+
         protected override void LoadContent()
         {
             Debug.WriteToFile("Started Loading Game Textures", true, false);
@@ -69,8 +69,8 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.LoadContent(Content);
-
+            level.LoadNextMap(Content);
+            
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -87,6 +87,7 @@ namespace Apocalyptic_Sunrise
             }
 
             gameStates.player = player;
+            level.player = player;
             player.level = level;
             gameStates.level = level;
             
@@ -95,6 +96,10 @@ namespace Apocalyptic_Sunrise
             gameStates.healthBar = healthBar;   
             gameStates.Update(gameTime);
 
+            if(Keyboard.GetState().IsKeyDown(Keys.End))
+            {
+                level.LoadNextMap(Content);
+            }
             base.Update(gameTime);
         }
 

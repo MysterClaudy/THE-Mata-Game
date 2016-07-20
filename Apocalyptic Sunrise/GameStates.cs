@@ -69,6 +69,8 @@ namespace Apocalyptic_Sunrise
         #region Update
         public void Update(GameTime gameTime)
         {
+            mouseState = Mouse.GetState();
+
             if (gameState == GameState.MainMenu)
             {
                 UpdateMenu();
@@ -98,7 +100,8 @@ namespace Apocalyptic_Sunrise
 
         public void UpdateGame(GameTime gameTime)
         {
-            player.Update(gameTime);
+           player.Update(gameTime);
+            level.Update(gameTime);
             healthBar.Update();
         }
 
