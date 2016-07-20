@@ -215,4 +215,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 # What the heck guys, keep your sourcetree license private
-sourcetree.license
+*.license
