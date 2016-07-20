@@ -14,17 +14,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Level1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level1.tmx
-
-#begin Level2.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level2.tmx
-
-#begin Table_tileset.png
+#begin Cave_Tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -34,19 +24,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Table_tileset.png
-
-#begin Cave_Tileset.gif
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Cave_Tileset.gif
+/build:Cave_Tileset.png
 
 #begin futuristic_tileset.png
 /importer:TextureImporter
@@ -60,6 +38,18 @@
 /processorParam:TextureFormat=Color
 /build:futuristic_tileset.png
 
+#begin pirate-themed-tilee.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:pirate-themed-tilee.png
+
 #begin futuristic_tileset2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,7 +62,7 @@
 /processorParam:TextureFormat=Color
 /build:futuristic_tileset2.png
 
-#begin pirate-themed-tilee.png
+#begin Table_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -82,5 +72,36 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:pirate-themed-tilee.png
+/build:Table_tileset.png
+
+#begin Level1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level1.tmx
+
+
+#begin Level2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level2.tmx
+
+
+#begin Audio/Nimbus_by_92.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Nimbus_by_92.mp3
+
+#begin Audio/Technicolor_by_Hydra.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Technicolor_by_Hydra.mp3
+
+#begin Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+
 
