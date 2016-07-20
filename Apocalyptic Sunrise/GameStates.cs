@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrebleGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
@@ -23,6 +24,7 @@ namespace Apocalyptic_Sunrise
         }
 
         public Game1 Game;
+        public DevLogging Debug;
 
         GameState gameState;
         public SpriteFont font;
@@ -191,6 +193,7 @@ namespace Apocalyptic_Sunrise
                 if (mouseClickedRect.Intersects(pausebuttonRect))
                 {
                     gameState = GameState.PauseMenu;
+                    Debug.WriteToFile("Pause Menu has been loaded and game has been paused", false, false);
                 }
             }
 
@@ -200,6 +203,7 @@ namespace Apocalyptic_Sunrise
                 if (mouseClickedRect.Intersects(resumeButtonRect))
                 {
                     gameState = GameState.Game;
+                    Debug.WriteToFile("Pause Menu has been unloaded and game has been resumed", false, false);
                 }
             }
 

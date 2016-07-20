@@ -9,15 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended;
 using MonoGame.Extended.Maps.Tiled;
+using TrebleGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
     public class Level
     {
-        
+  
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
+        public DevLogging Debug;
 
         private int levelIndex = 0;
         private const int numberOfLevels = 3;
@@ -43,11 +45,13 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if(levelIndex == 1)
             {
-              map = Content.Load<TiledMap>("Level2");
+                map = Content.Load<TiledMap>("Level1");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
             }
             else if (levelIndex == 2)
             {
                 map = Content.Load<TiledMap>("Level2");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
             }
             foreach (TiledTileLayer layer in map.TileLayers)
             {

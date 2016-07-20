@@ -119,6 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Content\Level1.tmx" />
+    <None Include="Content\Level2.tmx" />
     <None Include="Content\scoreFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
