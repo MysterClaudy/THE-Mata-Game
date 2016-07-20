@@ -14,7 +14,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Furniture_Tileset.png
+#begin Cave_Tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -24,7 +24,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Furniture_Tileset.png
+/build:Cave_Tileset.png
 
 #begin futuristic_tileset.png
 /importer:TextureImporter
@@ -38,12 +38,7 @@
 /processorParam:TextureFormat=Color
 /build:futuristic_tileset.png
 
-#begin Test1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Test1.tmx
-
-#begin Cave_Tileset.png
+#begin pirate-themed-tilee.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -53,9 +48,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Cave_Tileset.png
+/build:pirate-themed-tilee.png
 
-#begin steampunkish-tilec.png
+#begin futuristic_tileset2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -65,27 +60,22 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:steampunkish-tilec.png
+/build:futuristic_tileset2.png
+
+#begin Table_tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Table_tileset.png
 
 #begin Level1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Level1.tmx
-
-#begin Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tileset.png
-
-#begin Test2.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Test2.tmx
 
