@@ -78,11 +78,16 @@ namespace Apocalyptic_Sunrise
                 UpdateGame(gameTime);
                 isGame = true;
             }
-            mouseState = Mouse.GetState();
+            if (gameState == GameState.Options)
+            {
+
+            }
+
             if (previousMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
             {
                 MousedClicked(mouseState.X, mouseState.Y);
             }
+
             previousMouseState = mouseState;
         }
 
@@ -93,8 +98,13 @@ namespace Apocalyptic_Sunrise
 
         public void UpdateGame(GameTime gameTime)
         {
-           player.Update(gameTime);
+            player.Update(gameTime);
             healthBar.Update();
+        }
+
+        public void UpdateOptions()
+        {
+
         }
         #endregion
 
@@ -113,6 +123,7 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.PauseMenu)
             {
+
             }
         }
 
@@ -127,9 +138,6 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.Game)
             {
-             
-
-
                 spriteBatch.DrawString(font, "Game", new Vector2(100, 100), Color.White);
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
                 GameObject HealthBar = new GameObject(player.healthBar, player.healthPosition, new Vector2(1200, 400), 0, healthScale);
