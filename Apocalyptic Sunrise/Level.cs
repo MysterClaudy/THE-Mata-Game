@@ -19,7 +19,7 @@ namespace Apocalyptic_Sunrise
         public TiledTileLayer collisionLayer;
         public Player player;
 
-        private int levelIndex = -1;
+        private int levelIndex = 0;
         private const int numberOfLevels = 3;
         GraphicsDeviceManager graphics;
 
@@ -41,14 +41,14 @@ namespace Apocalyptic_Sunrise
         public void LoadNextMap(ContentManager Content)
         {
             levelIndex++;
-            if(levelIndex == 0)
+            if(levelIndex == 1)
             {
-              map = Content.Load<TiledMap>("Test2");
+              map = Content.Load<TiledMap>("Level1");
             }
-            else if(levelIndex == 1)
-            {
-                map = Content.Load<TiledMap>("Level1");
-            }
+            //else if(levelIndex == 2)
+            //{
+            //    map = Content.Load<TiledMap>("Level2");
+            //}
             foreach (TiledTileLayer layer in map.TileLayers)
             {
                 if(layer.Name == "Collisions")
@@ -108,7 +108,7 @@ namespace Apocalyptic_Sunrise
                 if ((celldown && !cell) || (celldiag && !cellright && nx))
                 {
                     // clamp the y position to avoid falling into platform below
-                    player.sPosition.Y = TileToPixel(ty);
+                    player.sPosition.Y = TileToPixel(ty) - 5;
                     player.sDirection.Y = 0; // stop downward velocity
                     ny = false; // - no longer overlaps the cells below
                 }
@@ -118,7 +118,7 @@ namespace Apocalyptic_Sunrise
                 if ((cell && !celldown) || (cellright && !celldiag && nx))
                 {
                     // clamp the y position to avoid jumping into platform above
-                   player.sPosition.Y = TileToPixel(ty + 1);
+                   player.sPosition.Y = TileToPixel(ty + 1) - 25;
                     player.sDirection.Y = 0; // stop upward velocity
                                          // player is no longer really in that cell, we clamped them
                                          // to the cell below

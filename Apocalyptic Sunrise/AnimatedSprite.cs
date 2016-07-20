@@ -13,7 +13,7 @@ namespace Apocalyptic_Sunrise
         #region Variables
         public enum myDirection { none, left, right, up, down };
         protected myDirection currentDir = myDirection.none;
-        protected Texture2D sTexture;
+        public Texture2D sTexture;
         public Vector2 sPosition;
         private int frameIndex;
         private double timeElapsed;
