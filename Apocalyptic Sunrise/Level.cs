@@ -45,10 +45,10 @@ namespace Apocalyptic_Sunrise
             {
               map = Content.Load<TiledMap>("Level1");
             }
-            //else if(levelIndex == 2)
-            //{
-            //    map = Content.Load<TiledMap>("Level2");
-            //}
+            else if (levelIndex == 2)
+            {
+                map = Content.Load<TiledMap>("Level2");
+            }
             foreach (TiledTileLayer layer in map.TileLayers)
             {
                 if(layer.Name == "Collisions")

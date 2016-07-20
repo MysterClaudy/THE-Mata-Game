@@ -79,3 +79,8 @@
 /processor:TiledMapProcessor
 /build:Level1.tmx
 
+#begin Level2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level2.tmx
+
