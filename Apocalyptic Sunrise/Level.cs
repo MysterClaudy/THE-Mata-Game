@@ -19,7 +19,7 @@ namespace Apocalyptic_Sunrise
         public TiledTileLayer collisionLayer;
         public Player player;
 
-        private int levelIndex = -1;
+        private int levelIndex = 0;
         private const int numberOfLevels = 3;
         GraphicsDeviceManager graphics;
 
@@ -41,13 +41,13 @@ namespace Apocalyptic_Sunrise
         public void LoadNextMap(ContentManager Content)
         {
             levelIndex++;
-            if(levelIndex == 0)
+            if(levelIndex == 1)
             {
               map = Content.Load<TiledMap>("Level1");
             }
-            //else if(levelIndex == 1)
+            //else if(levelIndex == 2)
             //{
-            //    map = Content.Load<TiledMap>("Level1");
+            //    map = Content.Load<TiledMap>("Level2");
             //}
             foreach (TiledTileLayer layer in map.TileLayers)
             {
