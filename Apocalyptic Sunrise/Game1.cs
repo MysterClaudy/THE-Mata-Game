@@ -54,7 +54,7 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.LoadContent(Content);
+            level.LoadNextMap(Content);
             
         }
 
@@ -65,6 +65,7 @@ namespace Apocalyptic_Sunrise
         protected override void Update(GameTime gameTime)
         {
             gameStates.player = player;
+            level.player = player;
             player.level = level;
             gameStates.level = level;
             
@@ -75,6 +76,10 @@ namespace Apocalyptic_Sunrise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if(Keyboard.GetState().IsKeyDown(Keys.End))
+            {
+                level.LoadNextMap(Content);
+            }
             base.Update(gameTime);
         }
 

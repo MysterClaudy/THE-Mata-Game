@@ -94,6 +94,7 @@ namespace Apocalyptic_Sunrise
         public void UpdateGame(GameTime gameTime)
         {
            player.Update(gameTime);
+            level.Update(gameTime);
             healthBar.Update();
         }
         #endregion
