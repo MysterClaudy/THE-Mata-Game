@@ -82,7 +82,7 @@ namespace Apocalyptic_Sunrise
             }
             if (gameState == GameState.Options)
             {
-
+                UpdateOptions();
             }
 
             if (previousMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
@@ -128,6 +128,11 @@ namespace Apocalyptic_Sunrise
             {
 
             }
+
+            if (gameState == GameState.Options)
+            {
+
+            }
         }
 
         public void Draw2(GameTime gameTime, SpriteBatch spriteBatch)
@@ -152,6 +157,11 @@ namespace Apocalyptic_Sunrise
                 spriteBatch.DrawString(font, "Pause", new Vector2(100, 100), Color.White);
                 spriteBatch.Draw(resumeButton, resumeButtonPosition, Color.White);
             }
+
+            if (gameState == GameState.Options)
+            {
+
+            }
         }
 
         public void MousedClicked(int x, int y)
@@ -174,6 +184,7 @@ namespace Apocalyptic_Sunrise
                 }
 
             }
+
             if (gameState == GameState.Game)
             {
                 Rectangle pausebuttonRect = new Rectangle(1210, 0, 70, 70);
@@ -182,6 +193,7 @@ namespace Apocalyptic_Sunrise
                     gameState = GameState.PauseMenu;
                 }
             }
+
             if (gameState == GameState.PauseMenu)
             { 
                 Rectangle resumeButtonRect = new Rectangle((int)resumeButtonPosition.X, (int)resumeButtonPosition.Y, 100, 20);
@@ -189,6 +201,11 @@ namespace Apocalyptic_Sunrise
                 {
                     gameState = GameState.Game;
                 }
+            }
+
+            if (gameState == GameState.Options)
+            {
+
             }
         }
         #endregion

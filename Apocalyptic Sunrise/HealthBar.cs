@@ -44,7 +44,7 @@ namespace Apocalyptic_Sunrise
                 currentHealth += 1;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+            if (Keyboard.GetState().IsKeyDown(Keys.RightShift))
             {
                 currentHealth -= 1;
             }

@@ -26,7 +26,7 @@ namespace TrebleGameUtils
         // http://stackoverflow.com/questions/17118537/an-unhandled-exception-of-type-system-unauthorizedaccessexception-occurred-in
         // And more SO code...
         {
-            string currentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "MATA");
+            string currentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Apocalyptic Sunrise");
             string currentFile = Path.ChangeExtension(currentDirectory, ".log");
             return currentFile;
         }
