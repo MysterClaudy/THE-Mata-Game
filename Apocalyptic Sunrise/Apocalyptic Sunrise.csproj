@@ -45,7 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AABB.cs" />
+    <Compile Include="AudioSystems.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="DevLogging.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameStates.cs" />
