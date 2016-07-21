@@ -15,10 +15,14 @@ namespace Apocalyptic_Sunrise
         bool attacking = false;
         float mySpeed = 200;
         public Level level;
+
+        public Texture2D elevatorTexture;
+        public Vector2 elevatorPosition;
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("playerSheet");
-
+            elevatorTexture = content.Load<Texture2D>("Elevator");
+            elevatorPosition = new Vector2(1760, 448);
         }
 
         public Level Level

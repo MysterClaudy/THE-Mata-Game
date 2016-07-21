@@ -24,9 +24,7 @@ namespace Apocalyptic_Sunrise
         HealthBar healthBar;
 
         string GameVersionBuild;
-        private int levelIndex = -1;
-        private const int numberOfLevels = 2;
-        Vector2 spawningPosition;
+
 
         public Game1()
         {
@@ -41,7 +39,7 @@ namespace Apocalyptic_Sunrise
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "Content"; 
             
             theGame = this;
             IsMouseVisible = true;
@@ -53,7 +51,8 @@ namespace Apocalyptic_Sunrise
 
             gameStates = new GameStates();
             level = new Level();
-            player = new Player(new Vector2(100,100));
+            level.LoadNextMap(Content);
+            player = new Player(level.playerSpawningPosition);
             camera = new Camera();
             healthBar = new HealthBar(Content);
             //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
@@ -69,7 +68,7 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.LoadNextMap(Content);
+            
             
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
