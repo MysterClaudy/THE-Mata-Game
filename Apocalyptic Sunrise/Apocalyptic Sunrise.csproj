@@ -48,7 +48,9 @@
     <Compile Include="AudioSystems.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="DevLogging.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="..\Game1.cs">
+      <Link>Game1.cs</Link>
+    </Compile>
     <Compile Include="GameObject.cs" />
     <Compile Include="GameStates.cs" />
     <Compile Include="HealthBar.cs" />
@@ -76,6 +78,9 @@
     <Content Include="Content\Audio\Nimbus_by_92.mp3" />
     <Content Include="Content\Audio\Technicolor_by_Hydra.mp3" />
     <Content Include="Content\Audio\Winter_Jazz_Up_by_Paper_Coelacanth.mp3" />
+    <Content Include="Content\Elevator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\exit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

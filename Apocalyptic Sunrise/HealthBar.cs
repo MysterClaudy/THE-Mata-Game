@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Apocalyptic_Sunrise
 {
-    class HealthBar
+    public class HealthBar
     {
         #region properties
 

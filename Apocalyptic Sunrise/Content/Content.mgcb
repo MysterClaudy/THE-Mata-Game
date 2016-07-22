@@ -14,18 +14,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Cave_Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Cave_Tileset.png
-
 #begin futuristic_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -79,6 +67,20 @@
 /processor:TiledMapProcessor
 /build:Level1.tmx
 
+<<<<<<< HEAD
+#begin Cave_Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Cave_Tileset.png
+
+=======
 
 #begin Level2.tmx
 /importer:TiledMapImporter
@@ -105,3 +107,4 @@
 /build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
 
 
+>>>>>>> master
