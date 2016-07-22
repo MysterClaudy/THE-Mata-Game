@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/Windows
-/intermediateDir:obj/Windows
+/outputDir:bin
+/intermediateDir:obj
 /platform:Windows
 /config:
 /profile:Reach
@@ -14,6 +13,28 @@
 /reference:..\..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Level2.tmx
+/importer:
+/processor:
+/build:Level2.tmx
+
+#begin Level1.tmx
+/importer:
+/processor:
+/build:Level1.tmx
+
+#begin Cave_Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Cave_Tileset.png
 
 #begin futuristic_tileset.png
 /importer:TextureImporter
@@ -27,18 +48,6 @@
 /processorParam:TextureFormat=Color
 /build:futuristic_tileset.png
 
-#begin pirate-themed-tilee.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:pirate-themed-tilee.png
-
 #begin futuristic_tileset2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -50,93 +59,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:futuristic_tileset2.png
-
-#begin Table_tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Table_tileset.png
-
-#begin Level1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level1.tmx
-
-<<<<<<< HEAD
-#begin Cave_Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Cave_Tileset.png
-
-=======
-
-#begin Level2.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level2.tmx
-
-
-#begin Audio/Nimbus_by_92.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Nimbus_by_92.mp3
-
-#begin Audio/Technicolor_by_Hydra.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Technicolor_by_Hydra.mp3
-
-#begin Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
-
-
->>>>>>> master
-=======
-
-#----------------------------- Global Properties ----------------------------#
-
-/outputDir:bin/Windows
-/intermediateDir:obj/Windows
-/platform:Windows
-/config:
-/profile:Reach
-/compress:False
-
-#-------------------------------- References --------------------------------#
-
-/reference:..\..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.Content.Pipeline.dll
-
-#---------------------------------- Content ---------------------------------#
-
-#begin futuristic_tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:futuristic_tileset.png
 
 #begin pirate-themed-tilee.png
 /importer:TextureImporter
@@ -150,18 +72,6 @@
 /processorParam:TextureFormat=Color
 /build:pirate-themed-tilee.png
 
-#begin futuristic_tileset2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:futuristic_tileset2.png
-
 #begin Table_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -174,50 +84,3 @@
 /processorParam:TextureFormat=Color
 /build:Table_tileset.png
 
-#begin Level1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level1.tmx
-
-<<<<<<< HEAD
-#begin Cave_Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Cave_Tileset.png
-
-=======
-
-#begin Level2.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Level2.tmx
-
-
-#begin Audio/Nimbus_by_92.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Nimbus_by_92.mp3
-
-#begin Audio/Technicolor_by_Hydra.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Technicolor_by_Hydra.mp3
-
-#begin Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
-
-
->>>>>>> master
->>>>>>> 4067815ed01bfabdf0d22cc650bc5b88a5c025bd

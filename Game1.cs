@@ -51,6 +51,7 @@ namespace Apocalyptic_Sunrise
 
             gameStates = new GameStates();
             level = new Level();
+            level.Debug = Debug;
             level.LoadNextMap(Content);  
             player = new Player(level.playerSpawningPosition);
             camera = new Camera();
@@ -85,6 +86,7 @@ namespace Apocalyptic_Sunrise
                 Exit();
             }
 
+            level.Debug = Debug;
             gameStates.player = player;
             player.gameStates = gameStates;
             level.gameState = gameStates;
