@@ -62,6 +62,7 @@ namespace Apocalyptic_Sunrise
             }
         }
 
+
         public static int PixelToTile(float pixelCoord)
         {
             return (int)Math.Floor(pixelCoord / tile);
