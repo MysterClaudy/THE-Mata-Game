@@ -88,16 +88,19 @@ namespace Apocalyptic_Sunrise
             //{
             //    sPostion.Y = 100;   
             //}
-
-            Rectangle elevatorRect = new Rectangle((int)elevatorPosition.X, (int)elevatorPosition.Y, elevatorTexture.Width, elevatorTexture.Height);
-            if (elevatorRect.Intersects(new Rectangle((int)sPosition.X, (int)sPosition.Y, sTexture.Width, sTexture.Height)))
+            if(level.levelIndex == 1)
             {
-                gameStates.isVisible = false;
+                Rectangle elevatorRect = new Rectangle((int)elevatorPosition.X, (int)elevatorPosition.Y, elevatorTexture.Width, elevatorTexture.Height);
+                if (elevatorRect.Intersects(new Rectangle((int)sPosition.X, (int)sPosition.Y, 50, 50)))
+                {
+                    gameStates.isVisible = false;
+                }
+                else
+                {
+                    gameStates.isVisible = true;
+                }
             }
-            else
-            {
-                gameStates.isVisible = true;
-            }
+            
             base.Update(gameTime);
         }
         

@@ -18,8 +18,9 @@ namespace Apocalyptic_Sunrise
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
+        public GameStates gameState;
         public Vector2 playerSpawningPosition;
-        private int levelIndex = 0;
+        public int levelIndex = 0;
         private const int numberOfLevels = 3;
         GraphicsDeviceManager graphics;
 
@@ -48,6 +49,8 @@ namespace Apocalyptic_Sunrise
             }
             else if (levelIndex == 2)
             {
+                player.isVisible = true;
+                gameState.isVisible = true;
                 map = Content.Load<TiledMap>("Level2");
             }
             foreach (TiledTileLayer layer in map.TileLayers)

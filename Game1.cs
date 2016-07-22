@@ -87,6 +87,7 @@ namespace Apocalyptic_Sunrise
 
             gameStates.player = player;
             player.gameStates = gameStates;
+            level.gameState = gameStates;
             level.player = player;
             player.level = level;
             gameStates.level = level;
