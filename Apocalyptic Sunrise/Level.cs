@@ -19,15 +19,13 @@ namespace Apocalyptic_Sunrise
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
-<<<<<<< HEAD
+
         public GameStates gameState;
         public Vector2 playerSpawningPosition;
         public int levelIndex = 0;
-=======
+
         public DevLogging Debug;
 
-        private int levelIndex = 0;
->>>>>>> master
         private const int numberOfLevels = 3;
         GraphicsDeviceManager graphics;
 
@@ -51,13 +49,13 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if(levelIndex == 1)
             {
-<<<<<<< HEAD
+
               map = Content.Load<TiledMap>("Level1");
                 playerSpawningPosition = new Vector2(96, 96);
-=======
+
                 map = Content.Load<TiledMap>("Level1");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
->>>>>>> master
+
             }
             else if (levelIndex == 2)
             {
