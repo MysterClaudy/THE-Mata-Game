@@ -50,8 +50,6 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if(levelIndex == 1)
             {
-
-              map = Content.Load<TiledMap>("Level1");
                 playerSpawningPosition = new Vector2(96, 96);
 
                 map = Content.Load<TiledMap>("Level1");
