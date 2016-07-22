@@ -4,6 +4,11 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
 using TrebleGameUtils;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Apocalyptic_Sunrise
 {
@@ -22,6 +27,11 @@ namespace Apocalyptic_Sunrise
         GameStates gameStates;
         Level level;
         HealthBar healthBar;
+
+        Texture2D thing;
+        Video video;
+        VideoPlayer vidplayer;
+        Texture2D videoTexture;
 
         string GameVersionBuild;
 
@@ -58,6 +68,8 @@ namespace Apocalyptic_Sunrise
             //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
             base.Initialize();
 
+            VideoPlayer vidPlayer = new VideoPlayer();
+
             Debug.WriteToFile("Finished Initializing Game", true, false);
         }
 
@@ -68,8 +80,15 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            
-            
+
+            thing = Content.Load<Texture2D>("start");
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            video = Content.Load<Video>("MenuBackground");
+            vidplayer = new VideoPlayer();
+
+            vidplayer.Play(video);
+
+
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -108,7 +127,27 @@ namespace Apocalyptic_Sunrise
             GraphicsDevice.Clear(Color.Black);           
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
-            
+
+            if (gameStates.isInMenu == true && gameStates.isGame != true)
+            {
+                // Only call GetTexture if a video is playing or paused
+                if (vidplayer.State != MediaState.Stopped)
+                    videoTexture = vidplayer.GetTexture();
+
+                // Drawing to the rectangle will stretch the 
+                // video to fill the screen
+                Rectangle screen = new Rectangle(GraphicsDevice.Viewport.X,
+                    GraphicsDevice.Viewport.Y,
+                    GraphicsDevice.Viewport.Width,
+                    GraphicsDevice.Viewport.Height);
+
+                // Draw the video, if we have a texture to draw.
+                if (videoTexture != null)
+                {
+                    spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
+            }
+
             gameStates.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 

@@ -93,6 +93,9 @@
     <Content Include="Content\HealthChanging.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\MenuBackground.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\playerSheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
