@@ -44,7 +44,7 @@ namespace Apocalyptic_Sunrise
         public Texture2D exitButtonTexture;
         public Texture2D pauseButton;
         public Texture2D resumeButton;
-        
+
         public Vector2 startButtonPosition = new Vector2(400, 300);
         public Vector2 exitButtonPosition = new Vector2(400, 350);
         public Vector2 resumeButtonPosition = new Vector2(360, 250);
@@ -97,15 +97,15 @@ namespace Apocalyptic_Sunrise
         }
 
         public void UpdateGame(GameTime gameTime)
-        {
-           player.Update(gameTime);
+        {    
+            player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
         }
 
         public void UpdateOptions()
         {
-
+            
         }
         #endregion
 
@@ -179,7 +179,7 @@ namespace Apocalyptic_Sunrise
                 else if (mouseClickedRect.Intersects(exitButtonRect))
                 {
                     Environment.Exit(0);
-                }
+                }              
 
             }
 
@@ -194,14 +194,14 @@ namespace Apocalyptic_Sunrise
             }
 
             if (gameState == GameState.PauseMenu)
-            { 
+            {
                 Rectangle resumeButtonRect = new Rectangle((int)resumeButtonPosition.X, (int)resumeButtonPosition.Y, 100, 20);
                 if (mouseClickedRect.Intersects(resumeButtonRect))
                 {
                     gameState = GameState.Game;
                     Debug.WriteToFile("Pause Menu has been unloaded and game has been resumed", false, false);
                 }
-            }
+                }
 
             if (gameState == GameState.Options)
             {
