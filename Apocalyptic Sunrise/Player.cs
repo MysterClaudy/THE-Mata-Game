@@ -15,6 +15,9 @@ namespace Apocalyptic_Sunrise
         bool attacking = false;
         float mySpeed = 200;
         public Level level;
+        public AABB aabb;
+        public GameStates gameStates;
+        public bool isVisible = true;
 
         public Texture2D elevatorTexture;
         public Vector2 elevatorPosition;
@@ -85,8 +88,20 @@ namespace Apocalyptic_Sunrise
             //{
             //    sPostion.Y = 100;   
             //}
+
+            Rectangle elevatorRect = new Rectangle((int)elevatorPosition.X, (int)elevatorPosition.Y, elevatorTexture.Width, elevatorTexture.Height);
+            if (elevatorRect.Intersects(new Rectangle((int)sPosition.X, (int)sPosition.Y, sTexture.Width, sTexture.Height)))
+            {
+                gameStates.isVisible = false;
+            }
+            else
+            {
+                gameStates.isVisible = true;
+            }
             base.Update(gameTime);
         }
+        
+
 
         private void HandleInput(KeyboardState keyState)
         {

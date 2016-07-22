@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Apocalyptic_Sunrise
 {
-    class GameStates
+    public class GameStates
     {
         #region Properties
         public enum GameState
@@ -36,6 +36,7 @@ namespace Apocalyptic_Sunrise
         public Game1 game;
         public Player player;
         public bool isGame = false;
+        public bool isVisible = true;
 
         #region Player UI
         float healthScale = 0.25f;
@@ -121,7 +122,11 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.Game)
             {
                 level.map.Draw(spriteBatch);
-                player.Draw(spriteBatch);
+                if (isVisible == true)
+                {
+                    player.Draw(spriteBatch);
+                }
+
 
                 spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
             }
