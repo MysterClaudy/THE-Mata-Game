@@ -24,14 +24,18 @@ namespace Apocalyptic_Sunrise
         {
             get { return level; }
         }
-
+        public bool IsOnGround
+        {
+            get { return isOnGround; }
+        }
+        bool isOnGround;
         public bool IsAlive
         {
             get { return isAlive; }
         }
 
         bool isAlive;
-
+        private float previousBottom;
         public Player(Vector2 position) : base(position)
         {
             FramesPerSecond = 10;
@@ -56,7 +60,6 @@ namespace Apocalyptic_Sunrise
         public override void Update(GameTime gameTime)
         {
             sDirection = Vector2.Zero;
-            HandleCollision();
             HandleInput(Keyboard.GetState());
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sDirection *= mySpeed;
@@ -215,38 +218,9 @@ namespace Apocalyptic_Sunrise
                 attacking = false;
             }
         }
-        private Rectangle localBounds;
-        public Rectangle BoundingRectangle
-        {
-            get
-            {
-                int left = (int)Math.Round(sPosition.X -  m_origin.X) + localBounds.X;
-                int top = (int)Math.Round(sPosition.Y - m_origin.Y) + localBounds.Y;
-
-                return new Rectangle(left, top, localBounds.Width, localBounds.Height);
-            }
-        }
        
-        public void HandleCollision()
-        {
-            Rectangle bounds = BoundingRectangle;
-            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
-            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    // If this tile is collidable,
-                    TileCollision collision = Level.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
-                    {
-                          
-                    }
-                }
-            }
+           
+        
         }
     }
-}

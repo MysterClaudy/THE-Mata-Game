@@ -45,6 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AABB.cs" />
+    <Compile Include="AudioSystems.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="DevLogging.cs" />
     <Compile Include="Game1.cs" />
@@ -61,6 +62,10 @@
     <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -68,6 +73,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Audio\Nimbus_by_92.mp3" />
+    <Content Include="Content\Audio\Technicolor_by_Hydra.mp3" />
+    <Content Include="Content\Audio\Winter_Jazz_Up_by_Paper_Coelacanth.mp3" />
     <Content Include="Content\exit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -78,12 +86,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\HealthChanging.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Levels\0.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Levels\1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\playerSheet.png">
@@ -117,6 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Content\Level1.tmx" />
+    <None Include="Content\Level2.tmx" />
     <None Include="Content\scoreFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

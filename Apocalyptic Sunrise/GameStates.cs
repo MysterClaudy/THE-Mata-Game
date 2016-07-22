@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
@@ -19,6 +20,7 @@ namespace Apocalyptic_Sunrise
         }
 
         public Game1 Game;
+        public DevLogging Debug;
 
         GameState gameState;
         public SpriteFont font;
@@ -65,6 +67,8 @@ namespace Apocalyptic_Sunrise
         #region Update
         public void Update(GameTime gameTime)
         {
+            mouseState = Mouse.GetState();
+
             if (gameState == GameState.MainMenu)
             {
                 UpdateMenu();
@@ -74,11 +78,16 @@ namespace Apocalyptic_Sunrise
                 UpdateGame(gameTime);
                 isGame = true;
             }
-            mouseState = Mouse.GetState();
+            if (gameState == GameState.Options)
+            {
+                UpdateOptions();
+            }
+
             if (previousMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
             {
                 MousedClicked(mouseState.X, mouseState.Y);
             }
+
             previousMouseState = mouseState;
         }
 
@@ -90,7 +99,13 @@ namespace Apocalyptic_Sunrise
         public void UpdateGame(GameTime gameTime)
         {
            player.Update(gameTime);
+            level.Update(gameTime);
             healthBar.Update();
+        }
+
+        public void UpdateOptions()
+        {
+
         }
         #endregion
 
@@ -103,10 +118,16 @@ namespace Apocalyptic_Sunrise
 
             if (gameState == GameState.Game && level != null)
             {
-                level.Draw(gameTime, spriteBatch);
+                level.map.Draw(spriteBatch);
+                player.Draw(spriteBatch);
             }
 
             if (gameState == GameState.PauseMenu)
+            {
+
+            }
+
+            if (gameState == GameState.Options)
             {
 
             }
@@ -134,6 +155,11 @@ namespace Apocalyptic_Sunrise
                 spriteBatch.DrawString(font, "Pause", new Vector2(100, 100), Color.White);
                 spriteBatch.Draw(resumeButton, resumeButtonPosition, Color.White);
             }
+
+            if (gameState == GameState.Options)
+            {
+
+            }
         }
 
         public void MousedClicked(int x, int y)
@@ -148,7 +174,6 @@ namespace Apocalyptic_Sunrise
                 if (mouseClickedRect.Intersects(startButtonRect))
                 {
                     gameState = GameState.Game;
-                    Game.LoadNextLevel();
                 }
 
                 else if (mouseClickedRect.Intersects(exitButtonRect))
@@ -157,21 +182,30 @@ namespace Apocalyptic_Sunrise
                 }
 
             }
+
             if (gameState == GameState.Game)
             {
                 Rectangle pausebuttonRect = new Rectangle(1210, 0, 70, 70);
                 if (mouseClickedRect.Intersects(pausebuttonRect))
                 {
                     gameState = GameState.PauseMenu;
+                    Debug.WriteToFile("Pause Menu has been loaded and game has been paused", false, false);
                 }
             }
+
             if (gameState == GameState.PauseMenu)
             { 
                 Rectangle resumeButtonRect = new Rectangle((int)resumeButtonPosition.X, (int)resumeButtonPosition.Y, 100, 20);
                 if (mouseClickedRect.Intersects(resumeButtonRect))
                 {
                     gameState = GameState.Game;
+                    Debug.WriteToFile("Pause Menu has been unloaded and game has been resumed", false, false);
                 }
+            }
+
+            if (gameState == GameState.Options)
+            {
+
             }
         }
         #endregion

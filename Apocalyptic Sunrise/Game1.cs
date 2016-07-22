@@ -11,82 +11,52 @@ namespace Apocalyptic_Sunrise
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        public static Game1 theGame;
+        public DevLogging Debug;
         public Player player;
         public Camera camera;
         GameStates gameStates;
         Level level;
         HealthBar healthBar;
-        public static Game1 theGame;
-        public DevLogging Debug;
-
-        int levelIndex = -1;
-        const int numberOfLevels = 2;
-        Vector2 spawningPosition;
 
         string GameVersionBuild;
+        private int levelIndex = -1;
+        private const int numberOfLevels = 2;
+        Vector2 spawningPosition;
 
         public Game1()
         {
-            theGame = this;
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
+            GameVersionBuild = "v0.3.5.102 ";
             DateTime thisDay = DateTime.Now;
-            GameVersionBuild = "v0.2.2.72 ";
-            Debug.WriteToFile("Starting The Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
-
+            Debug.WriteToFile("Starting Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
+            
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
-
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
             Debug.WriteToFile("Started Initializing Game", true, false);
 
-            IsMouseVisible = true;
-
             gameStates = new GameStates();
-            gameStates.Game = theGame;
-            player = new Player(new Vector2(100, 100));
+            gameStates.Debug = Debug;
+            level = new Level();
+            level.Debug = Debug;
+            player = new Player(new Vector2(100,100));
             camera = new Camera();
             healthBar = new HealthBar(Content);
+            //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
             base.Initialize();
 
             Debug.WriteToFile("Finished Initializing Game", true, false);
-        }
-
-        public void LoadNextLevel()
-        {
-            levelIndex = (levelIndex + 1);//  % 1;
-
-            Debug.WriteToFile("Started loading level" + levelIndex, true, false);
-
-            bool flag = level != null;
-            if (flag)
-            {
-                level.Dispose();
-            }
-            string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
-            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-            {
-                this.level = new Level(base.Services, fileStream, levelIndex);
-            }
-            if (levelIndex == 0)
-            {
-                spawningPosition = new Vector2(700, 300);
-            }
-            if (levelIndex == 1)
-            {
-                player.m_position = new Vector2(100, 100);
-            }
-
-            level.player = player;
-
-            Debug.WriteToFile("Finishied loading level " + levelIndex, true, false);
         }
 
         protected override void LoadContent()
@@ -96,7 +66,8 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-
+            level.LoadNextMap(Content);
+            
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -113,25 +84,28 @@ namespace Apocalyptic_Sunrise
             }
 
             gameStates.player = player;
-            if (level != null)
-            {
-                player.level = level;
-                gameStates.level = level;
-                level.graphics = graphics;
-            }
+            level.player = player;
+            player.level = level;
+            gameStates.level = level;
+            level.graphics = graphics;
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   
             gameStates.Update(gameTime);
 
+            if(Keyboard.GetState().IsKeyDown(Keys.Back))
+            {
+                level.LoadNextMap(Content);
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue); 
+            GraphicsDevice.Clear(Color.Black);           
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
+            
             gameStates.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 

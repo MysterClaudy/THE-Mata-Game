@@ -1,213 +1,148 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using MonoGame.Extended.Maps.Tiled;
+using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
     public class Level
     {
-        #region Properties
-        public Tile[,] tiles;
-        private Texture2D[] layers;
-        private const int entityLayer = 2;
+        public TiledMap map = null;
+        public TiledTileLayer collisionLayer;
         public Player player;
+        public DevLogging Debug;
 
-        private Vector2 spawn;
-        private static readonly Point InvalidPosition = new Point(-1, -1);
-        private Point exit = InvalidPosition;
-        private Random random = new Random();
-        bool reachedExit;
+        private int levelIndex = 0;
+        private const int numberOfLevels = 3;
         public GraphicsDeviceManager graphics;
 
-        ContentManager content;
+        public static int tile = 32;
+        public static float meter = tile;
 
-        #endregion
-
-
-        #region Collectors
-        public Player Player
+        public int ScreenWidth
         {
-            get { return player; }
+            get { return graphics.GraphicsDevice.Viewport.Width; }
         }
 
-        public ContentManager Content
+        public int ScreenHeight
         {
-            get { return content; }
+            get { return graphics.GraphicsDevice.Viewport.Width; }
         }
 
-        public int Width
+        public void LoadNextMap(ContentManager Content)
         {
-            get { return tiles.GetLength(0); }
-        }
-
-        /// <summary>
-        /// Height of the level measured in tiles.
-        /// </summary>
-        public int Height
-        {
-            get { return tiles.GetLength(1); }
-        }
-
-        public Rectangle GetBounds(int x, int y)
-        {
-            return new Rectangle(x * Tile.Width, y * Tile.Height, Tile.Width, Tile.Height);
-        }
-
-        public Level(IServiceProvider serviceProvider, Stream fileStream, int levelIndex)
-        {
-            content = new ContentManager(serviceProvider, "Content");
-
-            LoadTiles(fileStream);
-
-        }
-
-        private void LoadTiles(Stream fileStream)
-        {
-            int width;
-            List<string> lines = new List<string>();
-
-            using (StreamReader reader = new StreamReader(fileStream))
+            levelIndex++;
+            if(levelIndex == 1)
             {
-                string line = reader.ReadLine();
-                width = line.Length;
-                while (line != null)
+                map = Content.Load<TiledMap>("Level1");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
+            }
+            else if (levelIndex == 2)
+            {
+                map = Content.Load<TiledMap>("Level2");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
+            }
+            foreach (TiledTileLayer layer in map.TileLayers)
+            {
+                if(layer.Name == "Collisions")
                 {
-                    lines.Add(line);
-                    if (line.Length != width)
-                        throw new Exception(string.Format("the length of line {0} is different the otheres.", lines.Count));
-                    line = reader.ReadLine();
+                    collisionLayer = layer;
                 }
             }
+        }
 
-            tiles = new Tile[width, lines.Count];
-
-            for (int y = 0; y < Height; y++)
+        public static int PixelToTile(float pixelCoord)
             {
-                for (int x = 0; x < Width; x++)
-                {
-                    char tileType = lines[y][x];
-                    tiles[x, y] = LoadTile(tileType, x, y);
+            return (int)Math.Floor(pixelCoord / tile);
                 }
-            }
 
-            /*if (Player == null)
-                throw new NotSupportedException("spawning position needed"8);
-            if (exit == null)
-                throw new NotSupportedException("exit position needed");*/
+        public static int TileToPixel(int tileCoord)
+        {
+            return tile * tileCoord;
         }
 
-
-
-        private Tile LoadTile(char tileType, int x, int y)
+        public int CellAtPixelCoord(Vector2 pixelCoords)
         {
-            switch (tileType)
-            {
-                case '.':
-                    return new Tile(null, TileCollision.Passable);
-                case 'X':
-                    return LoadExitTile(x, y);
-                //case 'A':
-                //    return LoadEnemyTile(x, y, "EnemyA");
-                /*case 'S':
-                    return LoadSpawnTile(x, y);*/
-                case 'W':
-                    return LoadVarietyTile("WallA", 1, TileCollision.Impassable);
-                case '1':
-                    return LoadVarietyTile("WallB", 1, TileCollision.Impassable);
-
-                default:
-                    throw new NotSupportedException(string.Format("{0} at position {1}, {2} is not a supported tile type", tileType, x, y));
-            }
+            if (pixelCoords.X < 0 ||
+           pixelCoords.X > map.WidthInPixels || pixelCoords.Y < 0)
+                return 1;
+            // let the player drop of the bottom of the screen (this means death)
+            if (pixelCoords.Y > map.HeightInPixels)
+                return 0;
+            return CellAtTileCoord(
+           PixelToTile(pixelCoords.X), PixelToTile(pixelCoords.Y));
         }
 
-        private Tile LoadTile(string name, TileCollision collision)
+        public int CellAtTileCoord(int tx, int ty)
         {
-            return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
+            if (tx < 0 || tx >= map.Width || ty < 0)
+                return 1;
+            // let the player drop of the bottom of the screen (this means death)
+            if (ty >= map.Height)
+                return 0;
+            TiledTile tile = collisionLayer.GetTile(tx, ty);
+            return tile.Id;
         }
 
-        /*private Tile LoadSpawnTile(int x, int y)
+        public void Update(GameTime gameTime)
         {
-            if (Player != null) m
-                throw new NotSupportedException("Only 1 spawn point allowed");
+            int tx = PixelToTile(player.sPosition.X);
+            int ty = PixelToTile(player.sPosition.Y);
+            bool nx = (player.sPosition.X) % tile != 0;
 
-            spawn = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            player = new PlayerClass(null, new Vector2(100, 100), new Vector2(318, 513), 0, 0.15f, 3);
+            bool ny = (player.sPosition.Y) % tile != 0;
+            bool cell = CellAtTileCoord(tx, ty) != 0;
+            bool cellright = CellAtTileCoord(tx + 1, ty) != 0;
+            bool celldown = CellAtTileCoord(tx, ty + 1) != 0;
+            bool celldiag = CellAtTileCoord(tx + 1, ty + 1) != 0;
 
-           
-
-            return new Tile(null, TileCollision.Passable);
-        }*/
-
-        private Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
+            if (player.sDirection.Y > 0)
         {
-            int index = random.Next(variationCount);
-            return LoadTile(baseName + index, collision);
+                if ((celldown && !cell) || (celldiag && !cellright && nx))
+        {
+                    // clamp the y position to avoid falling into platform below
+                    player.sPosition.Y = TileToPixel(ty) - 5;
+                    player.sDirection.Y = 0; // stop downward velocity
+                    ny = false; // - no longer overlaps the cells below
+        }
+        }
+            else if (player.sDirection.Y < 0)
+        {
+                if ((cell && !celldown) || (cellright && !celldiag && nx))
+        {
+                    // clamp the y position to avoid jumping into platform above
+                   player.sPosition.Y = TileToPixel(ty + 1) - 25;
+                    player.sDirection.Y = 0; // stop upward velocity
+                                         // player is no longer really in that cell, we clamped them
+                                         // to the cell below
+                    cell = celldown;
+                    cellright = celldiag; // (ditto)
+                    ny = false; // player no longer overlaps the cells below
+        }
         }
 
-        private Tile LoadExitTile(int x, int y)
-        {
-            if (exit != InvalidPosition)
-                throw new NotSupportedException("only 1 exit Allowed");
-
-            exit = GetBounds(x, y).Center;
-
-            return LoadTile("Exit", TileCollision.Passable);
-        }
-
-        //private Tile LoadEnemyTile(int x, int y, string spriteSet)
-        //{
-            //Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            //enemies.Add(new Enemy());
-
-            //return new Tile(null, TileCollision.Passable);
-        //}
-
-        public void Dispose()
-        {
-            Content.Unload();
-        }
-
-        public TileCollision GetCollision(int x, int y)
-        {
-            if (x < 0 || x >= Width)
-                return TileCollision.Impassable;
-            if (y < 0 || y >= Height)
-                return TileCollision.Passable;
-            return tiles[x, y].collision;
-        }
-
-        private void Update(GameTime gameTime)
-        {
-            player.Update(gameTime);
-        }
-
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            DrawTiles(spriteBatch);
-
-            Game1.theGame.player.Draw(spriteBatch);
-        }
-
-        private void DrawTiles(SpriteBatch spriteBatch)
-        {
-            for (int y = 0; y < Height; ++y)
-            {
-                for (int x = 0; x < Width; ++x)
+            if (player.sDirection.X > 0)
                 {
-                    Texture2D texture = tiles[x, y].texture;
-                    if (texture != null)
+                if ((cellright && !cell) || (celldiag && !celldown && ny))
                     {
-                        Vector2 position = new Vector2(x, y) * Tile.size;
-                        spriteBatch.Draw(texture, position, Color.White);
+                    // clamp the x position to avoid moving into the platform
+                    // we just hit
+                    player.sPosition.X = TileToPixel(tx);
+                    player.sDirection.X = 0; // stop horizontal velocity
                     }
                 }
+            else if (player.sDirection.X < 0)
+            {
+                if ((cell && !cellright) || (celldown && !celldiag && ny))
+                {
+                    // clamp the x position to avoid moving into the platform
+                    // we just hit
+                    player.sPosition.X = TileToPixel(tx + 1);
+                    player.sDirection.X = 0; // stop horizontal velocity
             }
         }
 
-        #endregion
+        }
     }
 }

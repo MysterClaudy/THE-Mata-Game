@@ -13,13 +13,13 @@ namespace Apocalyptic_Sunrise
         #region Variables
         public enum myDirection { none, left, right, up, down };
         protected myDirection currentDir = myDirection.none;
-        protected Texture2D sTexture;
+        public Texture2D sTexture;
         public Vector2 sPosition;
         private int frameIndex;
         private double timeElapsed;
         private double timeToUpdate;
         protected string currentAnimation;
-        protected Vector2 sDirection = Vector2.Zero;
+        public Vector2 sDirection = Vector2.Zero;
 
         private Dictionary<string, Rectangle[]> sAnimations = new Dictionary<string, Rectangle[]>();
         private Dictionary<string, Vector2> sOffsets = new Dictionary<string, Vector2>();

@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -34,17 +35,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:exit.png
-
-#begin Fother-penguin.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Fother-penguin.png
 
 #begin Health.png
 /importer:TextureImporter
@@ -123,11 +113,6 @@
 /processorParam:TextureFormat=Color
 /build:resume.png
 
-#begin scoreFont.xnb
-/importer:
-/processor:
-/build:scoreFont.xnb
-
 #begin start.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -160,4 +145,32 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:zypher_galacticfederationmarine_sheet.png
+
+#begin Audio/Nimbus_by_92.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Nimbus_by_92.mp3
+
+#begin Audio/Technicolor_by_Hydra.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Technicolor_by_Hydra.mp3
+
+#begin Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+
+#begin Level1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level1.tmx
+
+#begin Level2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level2.tmx
 
