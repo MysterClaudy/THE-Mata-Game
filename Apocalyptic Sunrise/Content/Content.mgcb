@@ -67,6 +67,7 @@
 /processor:TiledMapProcessor
 /build:Level1.tmx
 
+<<<<<<< HEAD
 #begin Cave_Tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -79,3 +80,31 @@
 /processorParam:TextureFormat=Color
 /build:Cave_Tileset.png
 
+=======
+
+#begin Level2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Level2.tmx
+
+
+#begin Audio/Nimbus_by_92.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Nimbus_by_92.mp3
+
+#begin Audio/Technicolor_by_Hydra.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Technicolor_by_Hydra.mp3
+
+#begin Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Winter_Jazz_Up_by_Paper_Coelacanth.mp3
+
+
+>>>>>>> master
