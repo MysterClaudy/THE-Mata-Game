@@ -116,7 +116,7 @@ namespace Apocalyptic_Sunrise
                 
             }
 
-            if (gameState == GameState.Game && level != null)
+            if (gameState == GameState.Game && level.map != null)
             {
                 level.map.Draw(spriteBatch);
                 player.Draw(spriteBatch);

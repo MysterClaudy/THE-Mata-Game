@@ -30,7 +30,7 @@ namespace Apocalyptic_Sunrise
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
-            GameVersionBuild = "v0.3.5.102 ";
+            GameVersionBuild = "v0.3.5.105 ";
             DateTime thisDay = DateTime.Now;
             Debug.WriteToFile("Starting Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
             
@@ -39,7 +39,9 @@ namespace Apocalyptic_Sunrise
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
+
             IsMouseVisible = true;
+            theGame = this;
         }
 
         protected override void Initialize()
@@ -87,7 +89,7 @@ namespace Apocalyptic_Sunrise
             level.player = player;
             player.level = level;
             gameStates.level = level;
-            level.graphics = graphics;
+
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   

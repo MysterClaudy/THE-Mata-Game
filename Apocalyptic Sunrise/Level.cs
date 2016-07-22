@@ -15,7 +15,7 @@ namespace Apocalyptic_Sunrise
 
         private int levelIndex = 0;
         private const int numberOfLevels = 3;
-        public GraphicsDeviceManager graphics;
+        GraphicsDeviceManager graphics;
 
         public static int tile = 32;
         public static float meter = tile;
@@ -35,11 +35,13 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if(levelIndex == 1)
             {
+                Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
                 map = Content.Load<TiledMap>("Level1");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
             }
             else if (levelIndex == 2)
             {
+                Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
                 map = Content.Load<TiledMap>("Level2");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
             }
@@ -53,9 +55,9 @@ namespace Apocalyptic_Sunrise
         }
 
         public static int PixelToTile(float pixelCoord)
-            {
+        {
             return (int)Math.Floor(pixelCoord / tile);
-                }
+        }
 
         public static int TileToPixel(int tileCoord)
         {
@@ -65,13 +67,13 @@ namespace Apocalyptic_Sunrise
         public int CellAtPixelCoord(Vector2 pixelCoords)
         {
             if (pixelCoords.X < 0 ||
-           pixelCoords.X > map.WidthInPixels || pixelCoords.Y < 0)
+                pixelCoords.X > map.WidthInPixels || pixelCoords.Y < 0)
                 return 1;
-            // let the player drop of the bottom of the screen (this means death)
+                // let the player drop of the bottom of the screen (this means death)
             if (pixelCoords.Y > map.HeightInPixels)
                 return 0;
             return CellAtTileCoord(
-           PixelToTile(pixelCoords.X), PixelToTile(pixelCoords.Y));
+                PixelToTile(pixelCoords.X), PixelToTile(pixelCoords.Y));
         }
 
         public int CellAtTileCoord(int tx, int ty)
@@ -98,19 +100,19 @@ namespace Apocalyptic_Sunrise
             bool celldiag = CellAtTileCoord(tx + 1, ty + 1) != 0;
 
             if (player.sDirection.Y > 0)
-        {
+            {
                 if ((celldown && !cell) || (celldiag && !cellright && nx))
-        {
+                {
                     // clamp the y position to avoid falling into platform below
                     player.sPosition.Y = TileToPixel(ty) - 5;
                     player.sDirection.Y = 0; // stop downward velocity
                     ny = false; // - no longer overlaps the cells below
-        }
-        }
+                }
+            }
             else if (player.sDirection.Y < 0)
-        {
+            {
                 if ((cell && !celldown) || (cellright && !celldiag && nx))
-        {
+                {
                     // clamp the y position to avoid jumping into platform above
                    player.sPosition.Y = TileToPixel(ty + 1) - 25;
                     player.sDirection.Y = 0; // stop upward velocity
@@ -119,8 +121,8 @@ namespace Apocalyptic_Sunrise
                     cell = celldown;
                     cellright = celldiag; // (ditto)
                     ny = false; // player no longer overlaps the cells below
-        }
-        }
+                }
+            }
 
             if (player.sDirection.X > 0)
                 {
@@ -140,8 +142,8 @@ namespace Apocalyptic_Sunrise
                     // we just hit
                     player.sPosition.X = TileToPixel(tx + 1);
                     player.sDirection.X = 0; // stop horizontal velocity
+                }
             }
-        }
 
         }
     }
