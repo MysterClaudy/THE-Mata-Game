@@ -51,7 +51,7 @@ namespace Apocalyptic_Sunrise
 
             gameStates = new GameStates();
             level = new Level();
-            level.LoadNextMap(Content);
+            level.LoadNextMap(Content); 
             player = new Player(level.playerSpawningPosition);
             camera = new Camera();
             healthBar = new HealthBar(Content);
