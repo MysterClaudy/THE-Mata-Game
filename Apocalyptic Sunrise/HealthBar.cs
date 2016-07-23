@@ -15,7 +15,7 @@ namespace Apocalyptic_Sunrise
         public Texture2D changingHealth;
         public int maxHealth = 200;
         Vector2 healthScale = new Vector2(1f, 1f);
-        public int currentHealth = 100;
+        public int currentHealth = 200;
         public SpriteFont font;
         #endregion
         public HealthBar(ContentManager content)
@@ -34,15 +34,15 @@ namespace Apocalyptic_Sunrise
 
         public void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                currentHealth += 1;
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            //{
+            //    currentHealth += 1;
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.RightShift))
-            {
-                currentHealth -= 1;
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.RightShift))
+            //{
+            //    currentHealth -= 1;
+            //}
 
             if (currentHealth > maxHealth)
             {

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using TrebleSketchGameUtils;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Apocalyptic_Sunrise
 {
@@ -17,6 +19,7 @@ namespace Apocalyptic_Sunrise
             Game,
             PauseMenu,
             EndGame,
+            Win,
             Options
         }
 
@@ -24,9 +27,9 @@ namespace Apocalyptic_Sunrise
         public DevLogging Debug;
         public AudioSystems Audio;
 
-        GameState gameState;
+        public GameState gameState;
         public SpriteFont font;
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
         List<Vector2> SpawnPositions = new List<Vector2>();
         float spawn = 0;
         public Enemy enemy;
@@ -41,7 +44,7 @@ namespace Apocalyptic_Sunrise
         public bool isGame = false;
         public bool isVisible = true;
         public bool isInMenu = false;
-
+        public bool restartGame = false;
         #region Player UI
         float healthScale = 0.25f;
         #endregion
@@ -52,6 +55,9 @@ namespace Apocalyptic_Sunrise
         public Texture2D pauseButton;
         public Texture2D resumeButton;
         public Texture2D enemytexture;
+        public Texture2D GameOver;
+        public Texture2D WinScreen;
+        public Rectangle Mainframe;
         
         public Vector2 startButtonPosition = new Vector2(400, 300);
         public Vector2 exitButtonPosition = new Vector2(400, 350);
@@ -64,22 +70,49 @@ namespace Apocalyptic_Sunrise
 
         public void InitGame()
         {
-            // Positions that Enemies will spawn in
-            SpawnPositions.Add(new Vector2(384, 305));
-            SpawnPositions.Add(new Vector2(639, 242));
-            SpawnPositions.Add(new Vector2(894, 305));
-            SpawnPositions.Add(new Vector2(320, 430));
-            SpawnPositions.Add(new Vector2(500, 430));
-            SpawnPositions.Add(new Vector2(575, 430));
-            SpawnPositions.Add(new Vector2(700, 430));
+            if(Game1.theGame.level.levelIndex == 1)
+            {
+                // Positions that Enemies will spawn in
+                SpawnPositions.Add(new Vector2(384, 370));
+                SpawnPositions.Add(new Vector2(639, 320));
+                SpawnPositions.Add(new Vector2(894, 355));
+                SpawnPositions.Add(new Vector2(320, 470));
+                SpawnPositions.Add(new Vector2(500, 470));
+                SpawnPositions.Add(new Vector2(575, 470));
+                SpawnPositions.Add(new Vector2(700, 470));
 
-            for (int i = 0; i < 7; i++)
-            {
-                CreateEnemy(SpawnPositions[i]);
+                for (int i = 0; i < 7; i++)
+                {
+                    CreateEnemy(SpawnPositions[i]);
+                }
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.startposition = enemy.m_position;
+                }
             }
-            foreach (Enemy enemy in enemies)
+            else if(Game1.theGame.level.levelIndex == 2)
             {
-                enemy.startposition = enemy.m_position;
+                SpawnPositions.Add(new Vector2(128,96));
+                SpawnPositions.Add(new Vector2(576, 320));
+                SpawnPositions.Add(new Vector2(736, 224));
+                SpawnPositions.Add(new Vector2(512,128));
+                SpawnPositions.Add(new Vector2(320, 224));
+                SpawnPositions.Add(new Vector2(160, 512));
+                SpawnPositions.Add(new Vector2(544, 672));
+                SpawnPositions.Add(new Vector2(928, 672));
+                SpawnPositions.Add(new Vector2(928, 576));
+                SpawnPositions.Add(new Vector2(960, 320));
+                SpawnPositions.Add(new Vector2(960, 96));
+
+                for (int i = 0; i < 11; i++)
+                {
+                    CreateEnemy(SpawnPositions[i]);
+                }
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.startposition = enemy.m_position;
+                }
+
             }
         }
 
@@ -114,6 +147,16 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.Game)
             {
                 UpdateGame(gameTime);
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Tab))
+                {
+                    gameState = GameState.EndGame;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+                {
+                    gameState = GameState.Win;
+                }
+
                 isGame = true;
                 isInMenu = false;
             }
@@ -126,21 +169,40 @@ namespace Apocalyptic_Sunrise
             {
                 MousedClicked(mouseState.X, mouseState.Y);
             }
+            if (gameState == GameState.EndGame)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.MainMenu;
+                }
+            }
+            if (gameState == GameState.Win)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.MainMenu;
+                }
+            }
 
             previousMouseState = mouseState;
         }
 
         public void UpdateMenu()
         {
-
+            isGame = false;
         }
 
         public void UpdateGame(GameTime gameTime)
         {
+            isGame = true;
             player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
             EnemyMovement(gameTime);
+            if(healthBar.currentHealth <= 0)
+            {
+                gameState = GameState.EndGame;
+            }
         }
 
         public void UpdateOptions()
@@ -164,10 +226,24 @@ namespace Apocalyptic_Sunrise
                     player.Draw(spriteBatch);
                 }
 
+                if(player.tableIsVisible)
+                {
+                    spriteBatch.Draw(player.table2Tex, player.table2Pos, Color.White);
+                }
                 if (level.levelIndex == 1)
                 {
                     DrawEnemies(spriteBatch);
                     spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
+                }
+                if (level.levelIndex == 2)
+                {
+                    DrawEnemies(spriteBatch);
+                    spriteBatch.Draw(player.shipTexture, player.shipPosition, Color.White);
+                }
+
+                if (player.pressE == true)
+                {
+                    spriteBatch.Draw(player.PressEText, new Vector2(player.sPosition.X, player.sPosition.Y), Color.White);
                 }
 
             }
@@ -209,6 +285,16 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.Options)
             {
 
+            }
+            if (gameState == GameState.EndGame)
+            {
+                spriteBatch.Draw(GameOver, Mainframe, Color.White);
+                spriteBatch.DrawString(font, "Press Space Key to Continue!", new Vector2(500,670), Color.White);
+            }
+            if (gameState == GameState.Win)
+            {
+                spriteBatch.Draw(WinScreen, Mainframe, Color.White);
+                spriteBatch.DrawString(font, "Press Space Key to Continue!", new Vector2(500, 670), Color.White);
             }
         }
 
@@ -263,9 +349,11 @@ namespace Apocalyptic_Sunrise
 
                 if (mouseClickedRect.Intersects(startButtonRect))
                 {
+                    Game1.theGame.RestartGame();
+                    healthBar.currentHealth = healthBar.maxHealth;
                     gameState = GameState.Game;
                     AudioSystems.StartPlayingAudio(1, 0.35f, false);
-                    Debug.WriteToFile("AUDIO SHOULD BE PLAYING", true, false);
+                    Debug.WriteToFile("Audio started playing in Level " + level.levelIndex, false, false);
                 }
 
                 else if (mouseClickedRect.Intersects(exitButtonRect))
@@ -296,6 +384,10 @@ namespace Apocalyptic_Sunrise
             }
 
             if (gameState == GameState.Options)
+            {
+
+            }
+            if (gameState == GameState.EndGame)
             {
 
             }

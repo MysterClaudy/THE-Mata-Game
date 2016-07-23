@@ -18,8 +18,8 @@ namespace Apocalyptic_Sunrise
         public Player player;
         public Camera camera;
         public GameStates gameStates;
-        Level level;
-        HealthBar healthBar;
+        public Level level;
+        public HealthBar healthBar;
         AudioSystems Audio;
 
         string GameVersionBuild;
@@ -42,7 +42,7 @@ namespace Apocalyptic_Sunrise
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
-            GameVersionBuild = "v0.3.9.145 ";
+            GameVersionBuild = "v0.3.9.146 ";
             DateTime thisDay = DateTime.Now;
             Debug.WriteToFile("Starting Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
 
@@ -82,6 +82,15 @@ namespace Apocalyptic_Sunrise
             Debug.WriteToFile("Finished Initializing Game", true, false);
         }
 
+        public void RestartGame()
+        {
+            player = new Player(level.playerSpawningPosition);
+            player.LoadContent(Content);
+            // level.LoadNextMap(Content);
+            healthBar = new HealthBar(Content);
+            gameStates.InitGame();
+        }
+
         protected override void LoadContent()
         {
             Debug.WriteToFile("Started Loading Game Textures", true, false);
@@ -90,6 +99,8 @@ namespace Apocalyptic_Sunrise
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
             gameStates.enemytexture = Content.Load<Texture2D>("DroneSprite");
+            gameStates.GameOver = Content.Load<Texture2D>("GameOver");
+            gameStates.WinScreen = Content.Load<Texture2D>("WinScreen");
 
             vidplayer = new VideoPlayer();
             thing = Content.Load<Texture2D>("start");
@@ -100,8 +111,11 @@ namespace Apocalyptic_Sunrise
             blackScreen = Content.Load<Texture2D>("Black screen");
             level.font = Content.Load<SpriteFont>("scoreFont");
 
+            gameStates.Mainframe = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+
             AudioSystems.LoadContent(Content);
             AudioSystems.StartPlayingAudio(0, 0.25f, true);
+            Debug.WriteToFile("Audio started playing in Level " + level.levelIndex, false, false);
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -149,6 +163,13 @@ namespace Apocalyptic_Sunrise
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
             
+            gameStates.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();
+
+
+            spriteBatch.Begin();
+            
             if (gameStates.isInMenu == true && gameStates.isGame != true)
             {
                 if (vidplayer.State != MediaState.Stopped) // Only call GetTexture if a video is playing or paused
@@ -165,14 +186,6 @@ namespace Apocalyptic_Sunrise
                     spriteBatch.Draw(videoTexture, screen, Color.White);
                 }
             }
-
-            gameStates.Draw(gameTime, spriteBatch);
-
-            spriteBatch.End();
-
-
-            spriteBatch.Begin();
-
             if (gameStates.isGame)
             { 
                 healthBar.Draw(spriteBatch);
