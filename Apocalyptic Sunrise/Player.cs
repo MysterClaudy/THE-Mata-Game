@@ -106,11 +106,8 @@ namespace Apocalyptic_Sunrise
                     Game1.theGame.isloadingLevel = true;
                 }
             }
-            
             base.Update(gameTime);
         }
-        
-
 
         private void HandleInput(KeyboardState keyState)
         {
