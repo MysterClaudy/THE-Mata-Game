@@ -5,6 +5,13 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using TrebleSketchGameUtils;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Apocalyptic_Sunrise
 {
@@ -17,6 +24,7 @@ namespace Apocalyptic_Sunrise
             Game,
             PauseMenu,
             EndGame,
+            Win,
             Options
         }
 
@@ -51,6 +59,9 @@ namespace Apocalyptic_Sunrise
         public Texture2D pauseButton;
         public Texture2D resumeButton;
         public Texture2D enemytexture;
+        public Texture2D GameOver;
+        public Texture2D WinScreen;
+        public Rectangle Mainframe;
         
         public Vector2 startButtonPosition = new Vector2(400, 300);
         public Vector2 exitButtonPosition = new Vector2(400, 350);
@@ -113,6 +124,16 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.Game)
             {
                 UpdateGame(gameTime);
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Tab))
+                {
+                    gameState = GameState.EndGame;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+                {
+                    gameState = GameState.Win;
+                }
+
                 isGame = true;
                 isInMenu = false;
             }
@@ -124,6 +145,20 @@ namespace Apocalyptic_Sunrise
             if (previousMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
             {
                 MousedClicked(mouseState.X, mouseState.Y);
+            }
+            if (gameState == GameState.EndGame)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.MainMenu;
+                }
+            }
+            if (gameState == GameState.Win)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.MainMenu;
+                }
             }
 
             previousMouseState = mouseState;
@@ -209,6 +244,14 @@ namespace Apocalyptic_Sunrise
             {
 
             }
+            if (gameState == GameState.EndGame)
+            {
+                spriteBatch.Draw(GameOver, Mainframe, Color.White);
+            }
+            if (gameState == GameState.Win)
+            {
+                spriteBatch.Draw(WinScreen, Mainframe, Color.White);
+            }
         }
 
         #region EnemyStuff
@@ -293,6 +336,10 @@ namespace Apocalyptic_Sunrise
             }
 
             if (gameState == GameState.Options)
+            {
+
+            }
+            if (gameState == GameState.EndGame)
             {
 
             }

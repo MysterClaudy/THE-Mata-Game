@@ -82,6 +82,8 @@ namespace Apocalyptic_Sunrise
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
             gameStates.enemytexture = Content.Load<Texture2D>("DroneSprite");
+            gameStates.GameOver = Content.Load<Texture2D>("GameOver");
+            gameStates.WinScreen = Content.Load<Texture2D>("WinScreen");
 
             vidplayer = new VideoPlayer();
             thing = Content.Load<Texture2D>("start");
@@ -93,6 +95,8 @@ namespace Apocalyptic_Sunrise
             level.LoadNextMap(Content);
             blackScreen = Content.Load<Texture2D>("Black screen");
             level.font = Content.Load<SpriteFont>("scoreFont");
+
+            gameStates.Mainframe = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
