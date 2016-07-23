@@ -42,6 +42,7 @@ namespace Apocalyptic_Sunrise
         {
             get { return isAlive; }
         }
+
         bool isAlive;
         private bool attackingAllowed = false;
         private float previousBottom;
@@ -115,6 +116,7 @@ namespace Apocalyptic_Sunrise
             if (!attacking)
             {
                 mySpeed = 100;
+                FramesPerSecond = 10;
                 if (keyState.IsKeyDown(Keys.W))
                 {
                     //Move char Up
@@ -236,6 +238,10 @@ namespace Apocalyptic_Sunrise
                 }
                 currentDir = myDirection.none;
             }
+<<<<<<< HEAD
+=======
+            currentDir = myDirection.none;
+>>>>>>> 0c48980b0d36ae5f9e9990e07e4224f96aa7e4e7
         }
 
        public void Collision()

@@ -1,16 +1,10 @@
-﻿
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MonoGame.Extended;
 using MonoGame.Extended.Maps.Tiled;
-using TrebleGameUtils;
+using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
@@ -33,8 +27,8 @@ namespace Apocalyptic_Sunrise
 
         public static int tile = 32;
         public static float meter = tile;
-
-       public const float delay = 5;
+       
+        public const float delay = 5;
         public float remainingdelay = delay;
         private const float delay2 = 1;
         private float remainingdelay2 = delay2;
@@ -56,6 +50,7 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if (levelIndex == 1)
             {
+                Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
                 map = Content.Load<TiledMap>("Level1");
                 playerSpawningPosition = new Vector2(96, 96);
 
@@ -66,8 +61,13 @@ namespace Apocalyptic_Sunrise
             else if (levelIndex == 2)
             {
                 player.isVisible = true;
+<<<<<<< HEAD
+                gameState.isVisible = true;
+                Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
+=======
                 Game1.theGame.gameStates.isVisible = true;
                 playerSpawningPosition = new Vector2(576,512);
+>>>>>>> 43beaeaf43a5c8fc50200267010658188d2a3913
                 map = Content.Load<TiledMap>("Level2");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
                 Game1.theGame.gameStates.isVisible = true;
@@ -98,6 +98,7 @@ namespace Apocalyptic_Sunrise
                     spriteBatch.DrawString(font, "location: Bermuda Triangle", new Vector2(player.sPosition.X + 300, player.sPosition.Y + 300), Color.White);
                 }
         }
+
         public static int PixelToTile(float pixelCoord)
         {
             return (int)Math.Floor(pixelCoord / tile);
@@ -158,10 +159,10 @@ namespace Apocalyptic_Sunrise
                 if ((cell && !celldown) || (cellright && !celldiag && nx))
                 {
                     // clamp the y position to avoid jumping into platform above
-                    player.sPosition.Y = TileToPixel(ty + 1) - 25;
+                   player.sPosition.Y = TileToPixel(ty + 1) - 25;
                     player.sDirection.Y = 0; // stop upward velocity
-                                             // player is no longer really in that cell, we clamped them
-                                             // to the cell below
+                                         // player is no longer really in that cell, we clamped them
+                                         // to the cell below
                     cell = celldown;
                     cellright = celldiag; // (ditto)
                     ny = false; // player no longer overlaps the cells below

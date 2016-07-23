@@ -3,13 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
-using TrebleGameUtils;
+using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -95,7 +92,7 @@ namespace Apocalyptic_Sunrise
             player.level = level;
             player.gameStates = gameStates;
             gameStates.level = level;
-            
+
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   
