@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
+using Microsoft.Xna.Framework.Media;
 using TrebleSketchGameUtils;
 
 namespace Apocalyptic_Sunrise
@@ -23,6 +24,12 @@ namespace Apocalyptic_Sunrise
         string GameVersionBuild;
         private int levelIndex = -1;
         private const int numberOfLevels = 2;
+
+        Texture2D thing;
+        Video video;
+        VideoPlayer vidplayer;
+        Texture2D videoTexture;
+
         Vector2 spawningPosition;
 
         public Game1()
@@ -52,9 +59,15 @@ namespace Apocalyptic_Sunrise
             gameStates.Debug = Debug;
             level = new Level();
             level.Debug = Debug;
-            player = new Player(new Vector2(100,100));
+            level.gameState = gameStates;
+            player = new Player(level.playerSpawningPosition);
+           // level.LoadNextMap(Content);
             camera = new Camera();
             healthBar = new HealthBar(Content);
+            gameStates.InitGame();
+
+            VideoPlayer vidPlayer = new VideoPlayer();
+
             //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
             base.Initialize();
 
@@ -68,10 +81,19 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
+            gameStates.enemytexture = Content.Load<Texture2D>("DroneSprite");
+
+            vidplayer = new VideoPlayer();
+            thing = Content.Load<Texture2D>("start");
+            video = Content.Load<Video>("MenuBackground");
+            
+
+            vidplayer.Play(video);
+
             level.LoadNextMap(Content);
             blackScreen = Content.Load<Texture2D>("Black screen");
             level.font = Content.Load<SpriteFont>("scoreFont");
-            
+
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -87,21 +109,28 @@ namespace Apocalyptic_Sunrise
                 Exit();
             }
 
+            if (vidplayer.State != MediaState.Stopped)
+            {
+                vidplayer.Play(video);
+                vidplayer.IsLooped = false;
+            }
+
             gameStates.player = player;
             level.player = player;
             player.level = level;
             player.gameStates = gameStates;
             gameStates.level = level;
-
+            
             camera.graphics = graphics;
             camera.Update(player.sPosition);
             gameStates.healthBar = healthBar;   
             gameStates.Update(gameTime);
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Back))
+            if (Keyboard.GetState().IsKeyDown(Keys.End))
             {
                 level.LoadNextMap(Content);
             }
+
             base.Update(gameTime);
         }
 
@@ -114,22 +143,36 @@ namespace Apocalyptic_Sunrise
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
             
+            if (gameStates.isInMenu == true && gameStates.isGame != true)
+            {
+                if (vidplayer.State != MediaState.Stopped) // Only call GetTexture if a video is playing or paused
+                    videoTexture = vidplayer.GetTexture();
+
+                Rectangle screen = new Rectangle(GraphicsDevice.Viewport.X,
+                    GraphicsDevice.Viewport.Y,
+                    GraphicsDevice.Viewport.Width,
+                    GraphicsDevice.Viewport.Height);
+                    // Drawing to the rectangle will stretch the video to fill the screen
+
+                if (videoTexture != null) // Draw the video, if we have a texture to draw.
+                {
+                    spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
+            }
+
             gameStates.Draw(gameTime, spriteBatch);
+
             spriteBatch.End();
 
+
             spriteBatch.Begin();
-            if(gameStates.isGame)
+
+            if (gameStates.isGame)
             { 
                 healthBar.Draw(spriteBatch);
             }
             gameStates.Draw2(gameTime, spriteBatch);
-            spriteBatch.End();
-            spriteBatch.Begin();
-            if (gameStates.isGame)
-            {
-                healthBar.Draw(spriteBatch);
-            }
-            gameStates.Draw2(gameTime, spriteBatch);
+
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.viewMatrix);
             if (isloadingLevel == true)

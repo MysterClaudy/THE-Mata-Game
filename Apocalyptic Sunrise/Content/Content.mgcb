@@ -270,3 +270,8 @@
 /processorParam:TextureFormat=Color
 /build:Table_tileset.png
 
+#begin MenuBackground.mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:MenuBackground.mp4
+

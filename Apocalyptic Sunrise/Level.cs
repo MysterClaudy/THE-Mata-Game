@@ -60,7 +60,7 @@ namespace Apocalyptic_Sunrise
             }
             else if (levelIndex == 2)
             {
-                player.isVisible = true;
+                Game1.theGame.player.isVisible = true;
                 Game1.theGame.gameStates.isVisible = true;
                 Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
 

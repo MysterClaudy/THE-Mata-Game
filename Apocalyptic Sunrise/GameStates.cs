@@ -26,7 +26,9 @@ namespace Apocalyptic_Sunrise
         GameState gameState;
         public SpriteFont font;
         List<Enemy> enemies = new List<Enemy>();
-
+        List<Vector2> SpawnPositions = new List<Vector2>();
+        float spawn = 0;
+        public Enemy enemy;
         public MouseState mouseState;
         public MouseState previousMouseState;
         public GraphicsDeviceManager graphics;
@@ -48,7 +50,8 @@ namespace Apocalyptic_Sunrise
         public Texture2D exitButtonTexture;
         public Texture2D pauseButton;
         public Texture2D resumeButton;
-
+        public Texture2D enemytexture;
+        
         public Vector2 startButtonPosition = new Vector2(400, 300);
         public Vector2 exitButtonPosition = new Vector2(400, 350);
         public Vector2 resumeButtonPosition = new Vector2(360, 250);
@@ -57,6 +60,35 @@ namespace Apocalyptic_Sunrise
         #endregion
 
         #region Collectors
+
+        public void InitGame()
+        {
+            // Positions that Enemies will spawn in
+            SpawnPositions.Add(new Vector2(384, 305));
+            SpawnPositions.Add(new Vector2(639, 242));
+            SpawnPositions.Add(new Vector2(894, 305));
+            SpawnPositions.Add(new Vector2(320, 430));
+            SpawnPositions.Add(new Vector2(500, 430));
+            SpawnPositions.Add(new Vector2(575, 430));
+            SpawnPositions.Add(new Vector2(700, 430));
+
+            for (int i = 0; i < 7; i++)
+            {
+                CreateEnemy(SpawnPositions[i]);
+            }
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.startposition = enemy.m_position;
+            }
+        }
+
+        public void CreateEnemy(Vector2 position)
+        {
+            enemy = new Enemy(enemytexture,
+                       position, new Vector2(64, 64), 0, 1f, 1);
+            enemy.m_velocity.X = 1;
+            enemies.Add(enemy);
+        }
 
         #region Content
         public void LoadContent(ContentManager content)
@@ -107,11 +139,12 @@ namespace Apocalyptic_Sunrise
             player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
+            EnemyMovement(gameTime);
         }
 
         public void UpdateOptions()
         {
-            
+
         }
         #endregion
 
@@ -132,9 +165,10 @@ namespace Apocalyptic_Sunrise
 
                 if (level.levelIndex == 1)
                 {
+                    DrawEnemies(spriteBatch);
                     spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
                 }
-                
+
             }
 
             if (gameState == GameState.PauseMenu)
@@ -177,6 +211,46 @@ namespace Apocalyptic_Sunrise
             }
         }
 
+        #region EnemyStuff
+        public void EnemyMovement(GameTime gameTime)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.m_velocity.X == 0)
+                {
+                    Random randNum = new Random();
+                    enemy.m_velocity.X = randNum.Next(-2, 2);
+                }
+                if (Vector2.Distance(enemy.m_position, enemy.startposition) > 80)
+                {
+                    enemy.m_velocity.X *= -1;
+                    enemy.m_flipHorosontal = !enemy.m_flipHorosontal;
+                }
+
+                enemy.Update(gameTime);
+            }
+        }
+
+        public void DrawEnemies(SpriteBatch spriteBatch)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                SpriteEffects fx = SpriteEffects.None;
+                if (enemy.m_flipHorosontal)
+                    fx = SpriteEffects.FlipHorizontally;
+                spriteBatch.Draw(enemytexture,
+                enemy.m_position,
+                null,
+                Color.White,
+                0,
+                new Vector2(enemytexture.Width / 2, enemytexture.Height / 2),
+                new Vector2(enemy.m_size.X / enemytexture.Width, enemy.m_size.Y / enemytexture.Height),
+                fx,
+                0);
+            }
+        }
+        #endregion
+
         public void MousedClicked(int x, int y)
         {
             Rectangle mouseClickedRect = new Rectangle(x, y, 10, 10);
@@ -194,7 +268,7 @@ namespace Apocalyptic_Sunrise
                 else if (mouseClickedRect.Intersects(exitButtonRect))
                 {
                     Environment.Exit(0);
-                }              
+                }
 
             }
 
@@ -209,14 +283,14 @@ namespace Apocalyptic_Sunrise
             }
 
             if (gameState == GameState.PauseMenu)
-            {
+            { 
                 Rectangle resumeButtonRect = new Rectangle((int)resumeButtonPosition.X, (int)resumeButtonPosition.Y, 100, 20);
                 if (mouseClickedRect.Intersects(resumeButtonRect))
                 {
                     gameState = GameState.Game;
                     Debug.WriteToFile("Pause Menu has been unloaded and game has been resumed", false, false);
                 }
-                }
+            }
 
             if (gameState == GameState.Options)
             {
