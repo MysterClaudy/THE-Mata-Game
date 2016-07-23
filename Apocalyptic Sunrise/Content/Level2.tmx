@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="Cave_Tileset" tilewidth="32" tileheight="32" tilecount="280" columns="20">
-  <image source="Cave_Tileset.gif" width="640" height="450"/>
+  <image source="Cave_Tileset.png" width="640" height="450"/>
  </tileset>
  <layer name="Collisions" width="100" height="100">
   <data encoding="csv">

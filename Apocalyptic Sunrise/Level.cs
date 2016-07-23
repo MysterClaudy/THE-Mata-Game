@@ -1,3 +1,4 @@
+﻿
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,24 +10,36 @@ using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended;
 using MonoGame.Extended.Maps.Tiled;
+using TrebleGameUtils;
 
 namespace Apocalyptic_Sunrise
 {
     public class Level
     {
-        
+        public GraphicsDeviceManager graphics;
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
+        Game1 game = null;
+        public SpriteFont font;
+        List<Enemy> enemies = new List<Enemy>();
+        public GameStates gameState;
         public Vector2 playerSpawningPosition;
-        private int levelIndex = 0;
+        public int levelIndex = 0;
+
+        public DevLogging Debug;
+
         private const int numberOfLevels = 3;
-        GraphicsDeviceManager graphics;
 
         public static int tile = 32;
         public static float meter = tile;
-       
 
+       public const float delay = 5;
+        public float remainingdelay = delay;
+        private const float delay2 = 1;
+        private float remainingdelay2 = delay2;
+        private const float delay3 = 2;
+        private float remainingdelay3 = delay3;
 
         public int ScreenWidth
         {
@@ -41,24 +54,46 @@ namespace Apocalyptic_Sunrise
         public void LoadNextMap(ContentManager Content)
         {
             levelIndex++;
-            if(levelIndex == 1)
+            if (levelIndex == 1)
             {
-              map = Content.Load<TiledMap>("Level1");
+                map = Content.Load<TiledMap>("Level1");
                 playerSpawningPosition = new Vector2(96, 96);
+
+                map = Content.Load<TiledMap>("Level1");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
+
             }
             else if (levelIndex == 2)
             {
+                player.isVisible = true;
+                gameState.isVisible = true;
                 map = Content.Load<TiledMap>("Level2");
+                Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
             }
             foreach (TiledTileLayer layer in map.TileLayers)
             {
-                if(layer.Name == "Collisions")
+                if (layer.Name == "Collisions")
                 {
                     collisionLayer = layer;
                 }
             }
         }
 
+        public void info(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+                var timer2 = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                remainingdelay2 -= timer2;
+                if (remainingdelay2 <= 0)
+                {
+                    spriteBatch.DrawString(font, "time: 10:45pm", new Vector2(player.sPosition.X + 300,player.sPosition.Y + 300), Color.White);
+                }
+                var timer3 = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                remainingdelay3 -= timer3;
+                if (remainingdelay3 <= 0)
+                {
+                    spriteBatch.DrawString(font, "location: Bermuda Triangle", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 80), Color.White);
+                }
+        }
         public static int PixelToTile(float pixelCoord)
         {
             return (int)Math.Floor(pixelCoord / tile);
@@ -119,10 +154,10 @@ namespace Apocalyptic_Sunrise
                 if ((cell && !celldown) || (cellright && !celldiag && nx))
                 {
                     // clamp the y position to avoid jumping into platform above
-                   player.sPosition.Y = TileToPixel(ty + 1) - 25;
+                    player.sPosition.Y = TileToPixel(ty + 1) - 25;
                     player.sDirection.Y = 0; // stop upward velocity
-                                         // player is no longer really in that cell, we clamped them
-                                         // to the cell below
+                                             // player is no longer really in that cell, we clamped them
+                                             // to the cell below
                     cell = celldown;
                     cellright = celldiag; // (ditto)
                     ny = false; // player no longer overlaps the cells below
@@ -149,7 +184,13 @@ namespace Apocalyptic_Sunrise
                     player.sDirection.X = 0; // stop horizontal velocity
                 }
             }
-
         }
     }
 }
+
+            
+
+ 
+    
+
+
