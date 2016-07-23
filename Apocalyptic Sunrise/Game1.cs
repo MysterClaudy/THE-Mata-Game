@@ -19,7 +19,7 @@ namespace Apocalyptic_Sunrise
         public DevLogging Debug;
         public Player player;
         public Camera camera;
-        GameStates gameStates;
+        public GameStates gameStates;
         Level level;
         HealthBar healthBar;
 
@@ -72,6 +72,8 @@ namespace Apocalyptic_Sunrise
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
             level.LoadNextMap(Content);
+            blackScreen = Content.Load<Texture2D>("Black screen");
+            level.font = Content.Load<SpriteFont>("scoreFont");
             
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -106,6 +108,9 @@ namespace Apocalyptic_Sunrise
             base.Update(gameTime);
         }
 
+        public bool isloadingLevel = false;
+        Texture2D blackScreen;
+        public const float delay = 5;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);           
@@ -121,6 +126,30 @@ namespace Apocalyptic_Sunrise
                 healthBar.Draw(spriteBatch);
             }
             gameStates.Draw2(gameTime, spriteBatch);
+            spriteBatch.End();
+            spriteBatch.Begin();
+            if (gameStates.isGame)
+            {
+                healthBar.Draw(spriteBatch);
+            }
+            gameStates.Draw2(gameTime, spriteBatch);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.viewMatrix);
+            if (isloadingLevel == true)
+            {
+                spriteBatch.Draw(blackScreen, new Vector2(player.m_position.X - 300, player.m_position.Y - 0), Color.White);
+                level.info(spriteBatch, gameTime);
+
+                var timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                level.remainingdelay -= timer;
+                if (level.remainingdelay <= 0)
+                {
+                    isloadingLevel = false;
+                    level.remainingdelay = delay;
+                    level.LoadNextMap(Content);
+                }
+
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }
