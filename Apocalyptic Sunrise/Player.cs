@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Apocalyptic_Sunrise
 {
@@ -18,7 +19,7 @@ namespace Apocalyptic_Sunrise
         public AABB aabb;
         public GameStates gameStates;
         public bool isVisible = true;
-
+        public ContentManager Content;
         public Texture2D elevatorTexture;
         public Vector2 elevatorPosition;
         public void LoadContent(ContentManager content)
@@ -44,6 +45,8 @@ namespace Apocalyptic_Sunrise
 
         bool isAlive;
         private float previousBottom;
+        public const float delay = 3;
+        public float remainingdelay = delay;
         public Player(Vector2 position) : base(position)
         {
             FramesPerSecond = 10;
@@ -95,13 +98,15 @@ namespace Apocalyptic_Sunrise
                 if (elevatorRect.Intersects(new Rectangle((int)sPosition.X, (int)sPosition.Y, 50, 50)))
                 {
                     gameStates.isVisible = false;
-                }
-                else
-                {
-                    gameStates.isVisible = true;
+                    for (int i = 0; i < 30; i++)
+                    {
+                        sPosition = elevatorPosition;
+                        elevatorPosition -= new Vector2(0, 1);
+                    }
+                    Thread.Sleep(100);
+                    Game1.theGame.isloadingLevel = true;
                 }
             }
-            
             base.Update(gameTime);
         }
 

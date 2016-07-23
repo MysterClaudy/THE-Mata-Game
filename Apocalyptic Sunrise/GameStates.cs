@@ -130,8 +130,11 @@ namespace Apocalyptic_Sunrise
                     player.Draw(spriteBatch);
                 }
 
-
-                spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
+                if (level.levelIndex == 1)
+                {
+                    spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
+                }
+                
             }
 
             if (gameState == GameState.PauseMenu)
