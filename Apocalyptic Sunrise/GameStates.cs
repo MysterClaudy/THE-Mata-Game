@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonoGame.Extended;
+using MonoGame.Extended.Maps.Tiled;
 using TrebleGameUtils;
 
 namespace Apocalyptic_Sunrise
@@ -28,7 +30,8 @@ namespace Apocalyptic_Sunrise
 
         GameState gameState;
         public SpriteFont font;
-        
+        List<Enemy> enemies = new List<Enemy>();
+
         public MouseState mouseState;
         public MouseState previousMouseState;
         public GraphicsDeviceManager graphics;
@@ -103,9 +106,14 @@ namespace Apocalyptic_Sunrise
 
         public void UpdateGame(GameTime gameTime)
         {
-           player.Update(gameTime);
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
+            foreach(Enemy e in enemies)
+            {
+                e.Update(deltaTime);
+            }
         }
 
         public void UpdateOptions()
@@ -127,6 +135,11 @@ namespace Apocalyptic_Sunrise
                 if (isVisible == true)
                 {
                     player.Draw(spriteBatch);
+                }
+
+               foreach(Enemy e in enemies)
+                {
+                    e.Draw(spriteBatch);
                 }
 
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System;
 using System.IO;
 using TrebleGameUtils;
@@ -51,6 +52,7 @@ namespace Apocalyptic_Sunrise
 
             gameStates = new GameStates();
             level = new Level();
+            level.Debug = Debug;
             level.LoadNextMap(Content);  
             player = new Player(level.playerSpawningPosition);
             camera = new Camera();
@@ -68,7 +70,7 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            
+            level.LoadContent(Content);
             
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -88,6 +90,7 @@ namespace Apocalyptic_Sunrise
             gameStates.player = player;
             player.gameStates = gameStates;
             level.gameState = gameStates;
+            
             level.player = player;
             player.level = level;
             gameStates.level = level;

@@ -20,7 +20,9 @@ namespace Apocalyptic_Sunrise
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
+        Game1 game = null;
 
+        List<Enemy> enemies = new List<Enemy>();
         public GameStates gameState;
         public Vector2 playerSpawningPosition;
         public int levelIndex = 0;
@@ -74,6 +76,22 @@ namespace Apocalyptic_Sunrise
             }
         }
 
+        public void LoadContent(ContentManager Content)
+        {
+            foreach (TiledObjectGroup group in map.ObjectGroups)
+            {
+                if(group.Name == "Enemies")
+                {
+                    foreach (TiledObject obj in group.Objects)
+                    {
+                        Enemy enemy = new Enemy(game);
+                        enemy.LoadContent(Content);
+                        enemy.Position = new Vector2(obj.X, obj.Y);
+                        enemies.Add(enemy);
+                    }
+                }
+            }
+        }
 
         public static int PixelToTile(float pixelCoord)
         {
