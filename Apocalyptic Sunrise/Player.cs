@@ -41,6 +41,7 @@ namespace Apocalyptic_Sunrise
         {
             get { return isAlive; }
         }
+
         bool isAlive;
         private float previousBottom;
         public Player(Vector2 position) : base(position)
@@ -103,14 +104,13 @@ namespace Apocalyptic_Sunrise
             
             base.Update(gameTime);
         }
-        
-
 
         private void HandleInput(KeyboardState keyState)
         {
             if (!attacking)
             {
                 mySpeed = 100;
+                FramesPerSecond = 10;
                 if (keyState.IsKeyDown(Keys.W))
                 {
                     //Move char Up
@@ -228,7 +228,6 @@ namespace Apocalyptic_Sunrise
                 }
             }
             currentDir = myDirection.none;
-
         }
 
        

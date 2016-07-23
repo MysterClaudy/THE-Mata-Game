@@ -3,15 +3,11 @@ using System.IO;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TrebleGameUtils
+namespace TrebleSketchGameUtils
 {
-    /// <summary>
-    /// Debugging for the next generation! Coming to a game near you!
-    /// </summary>
     public class DevLogging // Version 6.2
     {
-        public SpriteFont textFont;
-
+        public SpriteFont scoreText;
         public bool SwitchOnce;
 
         public void ShowDebug()
