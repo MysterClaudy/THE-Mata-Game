@@ -20,10 +20,15 @@ namespace Apocalyptic_Sunrise
         public GameStates gameStates;
         Level level;
         HealthBar healthBar;
+        AudioSystems Audio;
 
         string GameVersionBuild;
         private int levelIndex = -1;
         private const int numberOfLevels = 2;
+
+        public bool isloadingLevel = false;
+        Texture2D blackScreen;
+        public const float delay = 5;
 
         Texture2D thing;
         Video video;
@@ -37,7 +42,7 @@ namespace Apocalyptic_Sunrise
             Debug = new DevLogging();
             File.Delete(Debug.GetCurrentDirectory());
             Debug.WriteToFile("This game proudly uses the TrebleSketch Utilities Debugger v6.2", true, false);
-            GameVersionBuild = "v0.3.6.126 ";
+            GameVersionBuild = "v0.3.9.143 ";
             DateTime thisDay = DateTime.Now;
             Debug.WriteToFile("Starting Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
 
@@ -55,8 +60,11 @@ namespace Apocalyptic_Sunrise
         {
             Debug.WriteToFile("Started Initializing Game", true, false);
 
+            Audio = new AudioSystems();
+
             gameStates = new GameStates();
             gameStates.Debug = Debug;
+            gameStates.Audio = Audio;
             level = new Level();
             level.Debug = Debug;
             level.gameState = gameStates;
@@ -86,13 +94,14 @@ namespace Apocalyptic_Sunrise
             vidplayer = new VideoPlayer();
             thing = Content.Load<Texture2D>("start");
             video = Content.Load<Video>("MenuBackground");
-            
-
             vidplayer.Play(video);
 
             level.LoadNextMap(Content);
             blackScreen = Content.Load<Texture2D>("Black screen");
             level.font = Content.Load<SpriteFont>("scoreFont");
+
+            AudioSystems.LoadContent(Content);
+            AudioSystems.StartPlayingAudio(0, 0.25f, true);
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -134,9 +143,6 @@ namespace Apocalyptic_Sunrise
             base.Update(gameTime);
         }
 
-        public bool isloadingLevel = false;
-        Texture2D blackScreen;
-        public const float delay = 5;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);           

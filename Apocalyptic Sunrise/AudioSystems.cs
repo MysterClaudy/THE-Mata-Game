@@ -8,56 +8,60 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Apocalyptic_Sunrise
 {
-    class AudioSystems
+    public class AudioControls
     {
+        public int songID;
+        public float audioVolume;
+        public bool repeatSong;
+        public bool isAudioPlaying;
 
-
-        public void Update()
+        public static void SetVariables(float audioVolume, bool repeatSong)
         {
-
+            MediaPlayer.Volume = audioVolume;
+            MediaPlayer.IsRepeating = repeatSong;
         }
     }
 
-    public class LoadMusic
+    public class AudioSystems
     {
-        public enum listOfSongs
+        static List<AudioControls> audios = new List<AudioControls>();
+        public static Song[] songLoaded = new Song[4];
+
+        //public AudioSystems(int songID = -1)
+        //{
+        //    audios;
+        //}
+
+
+        public static void LoadContent(ContentManager content)
         {
-            MainMenu,
-            InGame1,
-            InGame2
-        }
-
-        public Song MainMenuSong;
-        public Song InGameSong1;
-        public Song InGameSong2;
-
-        public int songID;
-
-        public float audioVolune;
-        public bool isAudioPlaying;
-
-        public LoadMusic(int songID, float audioVolume)
-        {
-
+            songLoaded[0] = content.Load<Song>("Audio/Epic-Music-Mix-Science-Fiction_by_Dragon's_Refuge_intro-edit");
+            songLoaded[1] = content.Load<Song>("Audio/Technicolor_by_Hydra");
+            songLoaded[2] = content.Load<Song>("Audio/Winter_Jazz_Up_by_Paper_Coelacanth");
+            songLoaded[3] = content.Load<Song>("Audio/Nimbus_by_92");
         }
 
         public void Update()
         {
+            //if (audios != null)
+            //{
+            //    while
+            //        if (!audio.isAudioPlaying)
+            //        {
+            //            MediaPlayer.Stop();
+            //        }
+            //    }
+            //}
 
         }
-
-        public void LoadContent(ContentManager content)
+        
+        public static void StartPlayingAudio(int songID, float audioVolume, bool repeatSong)
         {
-            MainMenuSong = content.Load<Song>("scoreFont");
-            InGameSong1 = content.Load<Song>("scoreFont");
-            InGameSong2 = content.Load<Song>("scoreFont");
-        }
+            //AudioSystems aS = new AudioSystems(songID);
+            //aS.LoadContent
+            AudioControls.SetVariables(audioVolume, repeatSong);
 
-        public static LoadMusic StartPlayingAudio(int songID, float audioVolume)
-        {
-            LoadMusic lm = new LoadMusic(songID, audioVolume);
-
-            return lm;
+            MediaPlayer.Play(songLoaded[songID]);
         }
     }
 }

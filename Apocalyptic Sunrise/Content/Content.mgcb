@@ -275,3 +275,9 @@
 /processor:VideoProcessor
 /build:MenuBackground.mp4
 
+#begin Audio/Epic-Music-Mix-Science-Fiction_by_Dragon's_Refuge_intro-edit.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Epic-Music-Mix-Science-Fiction_by_Dragon's_Refuge_intro-edit.mp3
+

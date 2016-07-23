@@ -22,6 +22,7 @@ namespace Apocalyptic_Sunrise
 
         public Game1 Game;
         public DevLogging Debug;
+        public AudioSystems Audio;
 
         GameState gameState;
         public SpriteFont font;
@@ -263,6 +264,8 @@ namespace Apocalyptic_Sunrise
                 if (mouseClickedRect.Intersects(startButtonRect))
                 {
                     gameState = GameState.Game;
+                    AudioSystems.StartPlayingAudio(1, 0.35f, false);
+                    Debug.WriteToFile("AUDIO SHOULD BE PLAYING", true, false);
                 }
 
                 else if (mouseClickedRect.Intersects(exitButtonRect))
