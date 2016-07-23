@@ -217,31 +217,30 @@ namespace Apocalyptic_Sunrise
                         currentDir = myDirection.up;
                     }
                 }
-                else if (!attacking)
-                {
-                    if (currentAnimation.Contains("Left"))
-                    {
-                        PlayAnimation("IdleLeft");
-                    }
-                    if (currentAnimation.Contains("Right"))
-                    {
-                        PlayAnimation("IdleRight");
-                    }
-                    if (currentAnimation.Contains("Up"))
-                    {
-                        PlayAnimation("IdleUp");
-                    }
-                    if (currentAnimation.Contains("Down"))
-                    {
-                        PlayAnimation("IdleDown");
-                    }
-                }
-                currentDir = myDirection.none;
             }
-<<<<<<< HEAD
-=======
+            else if (!attacking)
+            {
+                if (currentAnimation.Contains("Left"))
+                {
+                    PlayAnimation("IdleLeft");
+                }
+                if (currentAnimation.Contains("Right"))
+                {
+                    PlayAnimation("IdleRight");
+                }
+                if (currentAnimation.Contains("Up"))
+                {
+                    PlayAnimation("IdleUp");
+                }
+                if (currentAnimation.Contains("Down"))
+                {
+                    PlayAnimation("IdleDown");
+                }
+            }
+                currentDir = myDirection.none;
+            
+
             currentDir = myDirection.none;
->>>>>>> 0c48980b0d36ae5f9e9990e07e4224f96aa7e4e7
         }
 
        public void Collision()

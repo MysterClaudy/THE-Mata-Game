@@ -61,13 +61,12 @@ namespace Apocalyptic_Sunrise
             else if (levelIndex == 2)
             {
                 player.isVisible = true;
-<<<<<<< HEAD
-                gameState.isVisible = true;
+                Game1.theGame.gameStates.isVisible = true;
                 Debug.WriteToFile("Trying to load Level " + levelIndex, true, false);
-=======
+
                 Game1.theGame.gameStates.isVisible = true;
                 playerSpawningPosition = new Vector2(576,512);
->>>>>>> 43beaeaf43a5c8fc50200267010658188d2a3913
+
                 map = Content.Load<TiledMap>("Level2");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
                 Game1.theGame.gameStates.isVisible = true;
