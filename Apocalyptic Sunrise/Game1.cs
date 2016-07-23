@@ -18,8 +18,8 @@ namespace Apocalyptic_Sunrise
         public Player player;
         public Camera camera;
         public GameStates gameStates;
-        Level level;
-        HealthBar healthBar;
+        public Level level;
+        public HealthBar healthBar;
 
         string GameVersionBuild;
         private int levelIndex = -1;
@@ -40,7 +40,7 @@ namespace Apocalyptic_Sunrise
             GameVersionBuild = "v0.3.6.126 ";
             DateTime thisDay = DateTime.Now;
             Debug.WriteToFile("Starting Apocalyptic Sunrise " + GameVersionBuild + thisDay.ToString("dd-MM-yyyy HH:mm:ss zzz"), true, false);
-
+            
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
@@ -54,7 +54,6 @@ namespace Apocalyptic_Sunrise
         protected override void Initialize()
         {
             Debug.WriteToFile("Started Initializing Game", true, false);
-
             gameStates = new GameStates();
             gameStates.Debug = Debug;
             level = new Level();
@@ -72,6 +71,15 @@ namespace Apocalyptic_Sunrise
             base.Initialize();
 
             Debug.WriteToFile("Finished Initializing Game", true, false);
+        }
+
+        public void RestartGame()
+        {
+            player = new Player(level.playerSpawningPosition);
+            player.LoadContent(Content);
+            // level.LoadNextMap(Content);
+            healthBar = new HealthBar(Content);
+            gameStates.InitGame();
         }
 
         protected override void LoadContent()
@@ -131,6 +139,7 @@ namespace Apocalyptic_Sunrise
                 level.LoadNextMap(Content);
             }
 
+            
             base.Update(gameTime);
         }
 

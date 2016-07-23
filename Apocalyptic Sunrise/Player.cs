@@ -22,10 +22,17 @@ namespace Apocalyptic_Sunrise
         public ContentManager Content;
         public Texture2D elevatorTexture;
         public Vector2 elevatorPosition;
+        public Texture2D table2Tex;
+        public Vector2 table2Pos = new Vector2(128,448);
+        public List<Enemy> deadEnemies = new List<Enemy>();
+        public bool tableIsVisible = true;
+        public Texture2D PressEText;
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("playerSheet");
             elevatorTexture = content.Load<Texture2D>("Elevator");
+            table2Tex = content.Load<Texture2D>("Table2");
+            PressEText = content.Load<Texture2D>("PressE");
             elevatorPosition = new Vector2(1760, 448);
         }
 
@@ -44,6 +51,7 @@ namespace Apocalyptic_Sunrise
         }
 
         bool isAlive;
+        public bool pressE = false;
         private bool attackingAllowed = false;
         private float previousBottom;
         public const float delay = 3;
@@ -76,7 +84,7 @@ namespace Apocalyptic_Sunrise
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sDirection *= mySpeed;
             sPosition += (sDirection * deltaTime);
-
+            Collision();
             if(sPosition.X <= 0)
             {
                 sPosition.X = 0;
@@ -113,6 +121,7 @@ namespace Apocalyptic_Sunrise
 
         private void HandleInput(KeyboardState keyState)
         {
+            attacking = false;
             if (!attacking)
             {
                 mySpeed = 100;
@@ -149,7 +158,7 @@ namespace Apocalyptic_Sunrise
                     currentDir = myDirection.right;
 
                 }
-                if(keyState.IsKeyDown(Keys.LeftShift))
+                if (keyState.IsKeyDown(Keys.LeftShift))
                 {
                     mySpeed = 200;
                     FramesPerSecond = 20;
@@ -186,66 +195,118 @@ namespace Apocalyptic_Sunrise
 
                     }
                 }
-            }
 
-            if (attackingAllowed)
-            {
-                if (keyState.IsKeyDown(Keys.Space))
+                
+                if (attackingAllowed)
                 {
-                    if (currentAnimation.Contains("Down"))
+                    if (keyState.IsKeyDown(Keys.Space))
                     {
-                        PlayAnimation("AttackDown");
-                        attacking = true;
-                        currentDir = myDirection.down;
+                        sPosition += new Vector2(0,0);
+                        FramesPerSecond = 30;
+                        if (currentAnimation.Contains("Down"))
+                        {
+                            PlayAnimation("AttackDown");
+                            attacking = true;
+                            currentDir = myDirection.down;
+                        }
+                        if (currentAnimation.Contains("Left"))
+                        {
+                            PlayAnimation("AttackLeft");
+                            attacking = true;
+                            currentDir = myDirection.left;
+                        }
+                        if (currentAnimation.Contains("Right"))
+                        {
+                            PlayAnimation("AttackRight");
+                            attacking = true;
+                            currentDir = myDirection.right;
+                        }
+                        if (currentAnimation.Contains("Up"))
+                        {
+                            PlayAnimation("AttackUp");
+                            attacking = true;
+                            currentDir = myDirection.up;
+                        }
                     }
+                    
+                       
+                }
+                 if (!attacking)
+                {
                     if (currentAnimation.Contains("Left"))
                     {
-                        PlayAnimation("AttackLeft");
-                        attacking = true;
-                        currentDir = myDirection.left;
+                        PlayAnimation("IdleLeft");
                     }
                     if (currentAnimation.Contains("Right"))
                     {
-                        PlayAnimation("AttackRight");
-                        attacking = true;
-                        currentDir = myDirection.right;
+                        PlayAnimation("IdleRight");
                     }
                     if (currentAnimation.Contains("Up"))
                     {
-                        PlayAnimation("AttackUp");
-                        attacking = true;
-                        currentDir = myDirection.up;
+                        PlayAnimation("IdleUp");
+                    }
+                    if (currentAnimation.Contains("Down"))
+                    {
+                        PlayAnimation("IdleDown");
                     }
                 }
-            }
-            else if (!attacking)
-            {
-                if (currentAnimation.Contains("Left"))
-                {
-                    PlayAnimation("IdleLeft");
-                }
-                if (currentAnimation.Contains("Right"))
-                {
-                    PlayAnimation("IdleRight");
-                }
-                if (currentAnimation.Contains("Up"))
-                {
-                    PlayAnimation("IdleUp");
-                }
-                if (currentAnimation.Contains("Down"))
-                {
-                    PlayAnimation("IdleDown");
-                }
-            }
                 currentDir = myDirection.none;
-            
 
-            currentDir = myDirection.none;
+
+                currentDir = myDirection.none;
+            }
         }
 
        public void Collision()
         {
+            Rectangle playerRect = new Rectangle((int)sPosition.X, (int)sPosition.Y,50,50);
+            if(tableIsVisible == true)
+            {
+                if (playerRect.Intersects(new Rectangle((int)table2Pos.X, (int)table2Pos.Y, table2Tex.Width, table2Tex.Height)))
+                {
+                    pressE = true;
+                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    {
+                        attackingAllowed = true;
+                        tableIsVisible = false;
+                        pressE = false;
+                    }
+                }
+                else
+                {
+                    pressE = false;
+                }
+            }
 
+            if(attacking)
+            {
+                List<Enemy> DeadEnemies = new List<Enemy>();
+                foreach  (Enemy enemy in gameStates.enemies)
+                {
+                    if(playerRect.Intersects(new Rectangle((int)enemy.m_position.X, (int)enemy.m_position.Y, gameStates.enemytexture.Width, gameStates.enemytexture.Height)))
+                    {
+                        DeadEnemies.Add(enemy);
+                    }
+
+                }
+
+                foreach (Enemy enemy in DeadEnemies)
+                {
+                    gameStates.enemies.Remove(enemy);
+                }
+            }
+            else
+            {
+                foreach (Enemy enemy in gameStates.enemies)
+                {
+                    if (playerRect.Intersects(new Rectangle((int)enemy.m_position.X, (int)enemy.m_position.Y, gameStates.enemytexture.Width, gameStates.enemytexture.Height)))
+                    {
+                        Game1.theGame.healthBar.currentHealth -= 1;
+                    }
+                }
+
+            }
+            
         }
 
         public override void AnimationDone(string animation)
