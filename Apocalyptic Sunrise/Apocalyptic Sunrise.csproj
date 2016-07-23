@@ -48,10 +48,8 @@
     <Compile Include="AudioSystems.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="DevLogging.cs" />
-    <Compile Include="..\Game1.cs">
-      <Link>Game1.cs</Link>
-    </Compile>
     <Compile Include="Enemy.cs" />
+    <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameStates.cs" />
     <Compile Include="HealthBar.cs" />
@@ -98,6 +96,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\HealthChanging.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuBackground.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\playerSheet.png">

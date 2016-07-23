@@ -96,3 +96,8 @@
 /processorParam:TextureFormat=Color
 /build:Cave_Tileset.png
 
+#begin MenuBackground.mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:MenuBackground.mp4
+

@@ -42,6 +42,7 @@ namespace Apocalyptic_Sunrise
         public Player player;
         public bool isGame = false;
         public bool isVisible = true;
+        public bool isInMenu = false;
 
         #region Player UI
         float healthScale = 0.25f;
@@ -80,11 +81,13 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.MainMenu)
             {
                 UpdateMenu();
+                isInMenu = true;
             }
             if (gameState == GameState.Game)
             {
                 UpdateGame(gameTime);
                 isGame = true;
+                isInMenu = false;
             }
             if (gameState == GameState.Options)
             {
