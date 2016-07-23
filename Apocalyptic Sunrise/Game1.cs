@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
 using TrebleGameUtils;
+using Microsoft.Xna.Framework.Media;
 
 namespace Apocalyptic_Sunrise
 {
@@ -26,6 +27,12 @@ namespace Apocalyptic_Sunrise
         string GameVersionBuild;
         private int levelIndex = -1;
         private const int numberOfLevels = 2;
+
+        Texture2D thing;
+        Video video;
+        VideoPlayer vidplayer;
+        Texture2D videoTexture;
+
         Vector2 spawningPosition;
 
         public Game1()
@@ -55,9 +62,13 @@ namespace Apocalyptic_Sunrise
             gameStates.Debug = Debug;
             level = new Level();
             level.Debug = Debug;
-            player = new Player(new Vector2(100,100));
+            level.LoadNextMap(Content);
+            player = new Player(level.playerSpawningPosition);
             camera = new Camera();
             healthBar = new HealthBar(Content);
+
+            VideoPlayer vidPlayer = new VideoPlayer();
+
             //map = new TiledMap(GraphicsDevice, 110, 110, 32, 32, TiledMapOrientation.Orthogonal);
             base.Initialize();
 
@@ -71,8 +82,13 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.LoadNextMap(Content);
             
+            thing = Content.Load<Texture2D>("start");
+            video = Content.Load<Video>("MenuBackground");
+            vidplayer = new VideoPlayer();
+            
+            vidplayer.Play(video);
+
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
@@ -93,16 +109,17 @@ namespace Apocalyptic_Sunrise
             player.level = level;
             player.gameStates = gameStates;
             gameStates.level = level;
-            
+
             camera.graphics = graphics;
             camera.Update(player.sPosition);
-            gameStates.healthBar = healthBar;   
+            gameStates.healthBar = healthBar;
             gameStates.Update(gameTime);
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Back))
+            if (Keyboard.GetState().IsKeyDown(Keys.End))
             {
                 level.LoadNextMap(Content);
             }
+
             base.Update(gameTime);
         }
 
@@ -111,16 +128,37 @@ namespace Apocalyptic_Sunrise
             GraphicsDevice.Clear(Color.Black);           
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
-            
+
+            if (gameStates.isInMenu == true && gameStates.isGame != true)
+            {
+                if (vidplayer.State != MediaState.Stopped) // Only call GetTexture if a video is playing or paused
+                    videoTexture = vidplayer.GetTexture();
+
+                Rectangle screen = new Rectangle(GraphicsDevice.Viewport.X,
+                    GraphicsDevice.Viewport.Y,
+                    GraphicsDevice.Viewport.Width,
+                    GraphicsDevice.Viewport.Height);
+                    // Drawing to the rectangle will stretch the video to fill the screen
+
+                if (videoTexture != null) // Draw the video, if we have a texture to draw.
+                {
+                    spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
+            }
+
             gameStates.Draw(gameTime, spriteBatch);
+
             spriteBatch.End();
 
+
             spriteBatch.Begin();
-            if(gameStates.isGame)
+
+            if (gameStates.isGame)
             { 
                 healthBar.Draw(spriteBatch);
             }
             gameStates.Draw2(gameTime, spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
