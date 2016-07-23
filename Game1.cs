@@ -88,7 +88,6 @@ namespace Apocalyptic_Sunrise
 
             vidplayer.Play(video);
 
-
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
 
