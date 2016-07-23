@@ -33,7 +33,7 @@ namespace Apocalyptic_Sunrise
 
         GameState gameState;
         public SpriteFont font;
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
         List<Vector2> SpawnPositions = new List<Vector2>();
         float spawn = 0;
         public Enemy enemy;
@@ -48,7 +48,7 @@ namespace Apocalyptic_Sunrise
         public bool isGame = false;
         public bool isVisible = true;
         public bool isInMenu = false;
-
+        public bool restartGame = false;
         #region Player UI
         float healthScale = 0.25f;
         #endregion
@@ -74,22 +74,49 @@ namespace Apocalyptic_Sunrise
 
         public void InitGame()
         {
-            // Positions that Enemies will spawn in
-            SpawnPositions.Add(new Vector2(384, 305));
-            SpawnPositions.Add(new Vector2(639, 242));
-            SpawnPositions.Add(new Vector2(894, 305));
-            SpawnPositions.Add(new Vector2(320, 430));
-            SpawnPositions.Add(new Vector2(500, 430));
-            SpawnPositions.Add(new Vector2(575, 430));
-            SpawnPositions.Add(new Vector2(700, 430));
+            if(Game1.theGame.level.levelIndex == 1)
+            {
+                // Positions that Enemies will spawn in
+                SpawnPositions.Add(new Vector2(384, 370));
+                SpawnPositions.Add(new Vector2(639, 320));
+                SpawnPositions.Add(new Vector2(894, 355));
+                SpawnPositions.Add(new Vector2(320, 470));
+                SpawnPositions.Add(new Vector2(500, 470));
+                SpawnPositions.Add(new Vector2(575, 470));
+                SpawnPositions.Add(new Vector2(700, 470));
 
-            for (int i = 0; i < 7; i++)
-            {
-                CreateEnemy(SpawnPositions[i]);
+                for (int i = 0; i < 7; i++)
+                {
+                    CreateEnemy(SpawnPositions[i]);
+                }
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.startposition = enemy.m_position;
+                }
             }
-            foreach (Enemy enemy in enemies)
+            else if(Game1.theGame.level.levelIndex == 2)
             {
-                enemy.startposition = enemy.m_position;
+                SpawnPositions.Add(new Vector2(128,96));
+                SpawnPositions.Add(new Vector2(576, 320));
+                SpawnPositions.Add(new Vector2(736, 224));
+                SpawnPositions.Add(new Vector2(512,128));
+                SpawnPositions.Add(new Vector2(320, 224));
+                SpawnPositions.Add(new Vector2(160, 512));
+                SpawnPositions.Add(new Vector2(544, 672));
+                SpawnPositions.Add(new Vector2(928, 672));
+                SpawnPositions.Add(new Vector2(928, 576));
+                SpawnPositions.Add(new Vector2(960, 320));
+                SpawnPositions.Add(new Vector2(960, 96));
+
+                for (int i = 0; i < 11; i++)
+                {
+                    CreateEnemy(SpawnPositions[i]);
+                }
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.startposition = enemy.m_position;
+                }
+
             }
         }
 
@@ -166,15 +193,20 @@ namespace Apocalyptic_Sunrise
 
         public void UpdateMenu()
         {
-
+            isGame = false;
         }
 
         public void UpdateGame(GameTime gameTime)
         {
+            isGame = true;
             player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
             EnemyMovement(gameTime);
+            if(healthBar.currentHealth <= 0)
+            {
+                gameState = GameState.MainMenu;
+            }
         }
 
         public void UpdateOptions()
@@ -198,12 +230,24 @@ namespace Apocalyptic_Sunrise
                     player.Draw(spriteBatch);
                 }
 
+                if(player.tableIsVisible)
+                {
+                    spriteBatch.Draw(player.table2Tex, player.table2Pos, Color.White);
+                }
                 if (level.levelIndex == 1)
                 {
                     DrawEnemies(spriteBatch);
                     spriteBatch.Draw(player.elevatorTexture, player.elevatorPosition, Color.White);
                 }
+                if (level.levelIndex == 2)
+                {
+                    DrawEnemies(spriteBatch);
+                }
 
+                if (player.pressE == true)
+                {
+                    spriteBatch.Draw(player.PressEText, new Vector2(player.sPosition.X, player.sPosition.Y), Color.White);
+                }
             }
 
             if (gameState == GameState.PauseMenu)
@@ -305,6 +349,8 @@ namespace Apocalyptic_Sunrise
 
                 if (mouseClickedRect.Intersects(startButtonRect))
                 {
+                    Game1.theGame.RestartGame();
+                    healthBar.currentHealth = healthBar.maxHealth;
                     gameState = GameState.Game;
                 }
 
