@@ -118,6 +118,9 @@
     <Content Include="Content\resume.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\start.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

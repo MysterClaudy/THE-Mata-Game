@@ -27,12 +27,15 @@ namespace Apocalyptic_Sunrise
         public List<Enemy> deadEnemies = new List<Enemy>();
         public bool tableIsVisible = true;
         public Texture2D PressEText;
+        public Texture2D shipTexture;
+        public Vector2 shipPosition = new Vector2(928,64);
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("playerSheet");
             elevatorTexture = content.Load<Texture2D>("Elevator");
             table2Tex = content.Load<Texture2D>("Table2");
             PressEText = content.Load<Texture2D>("PressE");
+            shipTexture = content.Load<Texture2D>("ship");
             elevatorPosition = new Vector2(1760, 448);
         }
 
@@ -305,6 +308,11 @@ namespace Apocalyptic_Sunrise
                     }
                 }
 
+            }
+
+            if(playerRect.Intersects(new Rectangle((int)shipPosition.X, (int)shipPosition.Y, shipTexture.Width, shipTexture.Height)))
+            {
+                Game1.theGame.gameStates.gameState = GameStates.GameState.Win;
             }
             
         }

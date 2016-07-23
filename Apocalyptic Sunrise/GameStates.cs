@@ -31,7 +31,7 @@ namespace Apocalyptic_Sunrise
         public Game1 Game;
         public DevLogging Debug;
 
-        GameState gameState;
+        public GameState gameState;
         public SpriteFont font;
         public List<Enemy> enemies = new List<Enemy>();
         List<Vector2> SpawnPositions = new List<Vector2>();
@@ -205,7 +205,7 @@ namespace Apocalyptic_Sunrise
             EnemyMovement(gameTime);
             if(healthBar.currentHealth <= 0)
             {
-                gameState = GameState.MainMenu;
+                gameState = GameState.EndGame;
             }
         }
 
@@ -242,12 +242,14 @@ namespace Apocalyptic_Sunrise
                 if (level.levelIndex == 2)
                 {
                     DrawEnemies(spriteBatch);
+                    spriteBatch.Draw(player.shipTexture, player.shipPosition, Color.White);
                 }
 
                 if (player.pressE == true)
                 {
                     spriteBatch.Draw(player.PressEText, new Vector2(player.sPosition.X, player.sPosition.Y), Color.White);
                 }
+
             }
 
             if (gameState == GameState.PauseMenu)
@@ -276,6 +278,7 @@ namespace Apocalyptic_Sunrise
                 /*spriteBatch.Draw(player.healthTexture,new Rectangle(1130, 50, 1200, 400), new Rectangle(1130, 50, 1200, 400), Color.White);
                 GameObject HealthBar = new GameObject(player.healthBar, player.healthPosition, new Vector2(1200, 400), 0, healthScale);
                 HealthBar.Draw(gameTime, spriteBatch, player.healthBar);*/
+                
             }
 
             if (gameState == GameState.PauseMenu)
@@ -291,10 +294,12 @@ namespace Apocalyptic_Sunrise
             if (gameState == GameState.EndGame)
             {
                 spriteBatch.Draw(GameOver, Mainframe, Color.White);
+                spriteBatch.DrawString(font, "Press Space Key to Continue!", new Vector2(500,670), Color.White);
             }
             if (gameState == GameState.Win)
             {
                 spriteBatch.Draw(WinScreen, Mainframe, Color.White);
+                spriteBatch.DrawString(font, "Press Space Key to Continue!", new Vector2(500, 670), Color.White);
             }
         }
 

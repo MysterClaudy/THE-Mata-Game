@@ -156,6 +156,15 @@ namespace Apocalyptic_Sunrise
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
             
+            
+
+            gameStates.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();
+
+
+            spriteBatch.Begin();
+            
             if (gameStates.isInMenu == true && gameStates.isGame != true)
             {
                 if (vidplayer.State != MediaState.Stopped) // Only call GetTexture if a video is playing or paused
@@ -165,21 +174,13 @@ namespace Apocalyptic_Sunrise
                     GraphicsDevice.Viewport.Y,
                     GraphicsDevice.Viewport.Width,
                     GraphicsDevice.Viewport.Height);
-                    // Drawing to the rectangle will stretch the video to fill the screen
+                // Drawing to the rectangle will stretch the video to fill the screen
 
                 if (videoTexture != null) // Draw the video, if we have a texture to draw.
                 {
                     spriteBatch.Draw(videoTexture, screen, Color.White);
                 }
             }
-
-            gameStates.Draw(gameTime, spriteBatch);
-
-            spriteBatch.End();
-
-
-            spriteBatch.Begin();
-
             if (gameStates.isGame)
             { 
                 healthBar.Draw(spriteBatch);
