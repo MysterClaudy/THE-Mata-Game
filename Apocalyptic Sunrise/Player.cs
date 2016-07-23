@@ -43,6 +43,7 @@ namespace Apocalyptic_Sunrise
             get { return isAlive; }
         }
         bool isAlive;
+        private bool attackingAllowed = false;
         private float previousBottom;
         public const float delay = 3;
         public float remainingdelay = delay;
@@ -184,57 +185,63 @@ namespace Apocalyptic_Sunrise
                     }
                 }
             }
-            if (keyState.IsKeyDown(Keys.Space))
-            {
-                if (currentAnimation.Contains("Down"))
-                {
-                    PlayAnimation("AttackDown");
-                    attacking = true;
-                    currentDir = myDirection.down;
-                }
-                if (currentAnimation.Contains("Left"))
-                {
-                    PlayAnimation("AttackLeft");
-                    attacking = true;
-                    currentDir = myDirection.left;
-                }
-                if (currentAnimation.Contains("Right"))
-                {
-                    PlayAnimation("AttackRight");
-                    attacking = true;
-                    currentDir = myDirection.right;
-                }
-                if (currentAnimation.Contains("Up"))
-                {
-                    PlayAnimation("AttackUp");
-                    attacking = true;
-                    currentDir = myDirection.up;
-                }
-            }
-            else if (!attacking)
-            {
-                if (currentAnimation.Contains("Left"))
-                {
-                    PlayAnimation("IdleLeft");
-                }
-                if (currentAnimation.Contains("Right"))
-                {
-                    PlayAnimation("IdleRight");
-                }
-                if (currentAnimation.Contains("Up"))
-                {
-                    PlayAnimation("IdleUp");
-                }
-                if (currentAnimation.Contains("Down"))
-                {
-                    PlayAnimation("IdleDown");
-                }
-            }
-            currentDir = myDirection.none;
 
+            if (attackingAllowed)
+            {
+                if (keyState.IsKeyDown(Keys.Space))
+                {
+                    if (currentAnimation.Contains("Down"))
+                    {
+                        PlayAnimation("AttackDown");
+                        attacking = true;
+                        currentDir = myDirection.down;
+                    }
+                    if (currentAnimation.Contains("Left"))
+                    {
+                        PlayAnimation("AttackLeft");
+                        attacking = true;
+                        currentDir = myDirection.left;
+                    }
+                    if (currentAnimation.Contains("Right"))
+                    {
+                        PlayAnimation("AttackRight");
+                        attacking = true;
+                        currentDir = myDirection.right;
+                    }
+                    if (currentAnimation.Contains("Up"))
+                    {
+                        PlayAnimation("AttackUp");
+                        attacking = true;
+                        currentDir = myDirection.up;
+                    }
+                }
+                else if (!attacking)
+                {
+                    if (currentAnimation.Contains("Left"))
+                    {
+                        PlayAnimation("IdleLeft");
+                    }
+                    if (currentAnimation.Contains("Right"))
+                    {
+                        PlayAnimation("IdleRight");
+                    }
+                    if (currentAnimation.Contains("Up"))
+                    {
+                        PlayAnimation("IdleUp");
+                    }
+                    if (currentAnimation.Contains("Down"))
+                    {
+                        PlayAnimation("IdleDown");
+                    }
+                }
+                currentDir = myDirection.none;
+            }
         }
 
-       
+       public void Collision()
+        {
+
+        }
 
         public override void AnimationDone(string animation)
         {
