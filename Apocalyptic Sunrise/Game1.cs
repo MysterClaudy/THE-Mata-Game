@@ -62,10 +62,12 @@ namespace Apocalyptic_Sunrise
             gameStates.Debug = Debug;
             level = new Level();
             level.Debug = Debug;
+            level.gameState = gameStates;
             level.LoadNextMap(Content);
             player = new Player(level.playerSpawningPosition);
             camera = new Camera();
             healthBar = new HealthBar(Content);
+            gameStates.InitGame();
 
             VideoPlayer vidPlayer = new VideoPlayer();
 
@@ -82,11 +84,13 @@ namespace Apocalyptic_Sunrise
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            
+            gameStates.enemytexture = Content.Load<Texture2D>("DroneSprite");
+
+
             thing = Content.Load<Texture2D>("start");
             video = Content.Load<Video>("MenuBackground");
             vidplayer = new VideoPlayer();
-            
+
             vidplayer.Play(video);
 
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
@@ -102,6 +106,12 @@ namespace Apocalyptic_Sunrise
             {
                 Debug.WriteToFile("Ending Game...", true, false);
                 Exit();
+            }
+
+            if (vidplayer.State != MediaState.Stopped)
+            {
+                vidplayer.Play(video);
+                vidplayer.IsLooped = false;
             }
 
             gameStates.player = player;
