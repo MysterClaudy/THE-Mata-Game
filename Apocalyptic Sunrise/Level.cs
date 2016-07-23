@@ -66,10 +66,13 @@ namespace Apocalyptic_Sunrise
             else if (levelIndex == 2)
             {
                 player.isVisible = true;
-                gameState.isVisible = true;
+                Game1.theGame.gameStates.isVisible = true;
+                playerSpawningPosition = new Vector2(576,512);
                 map = Content.Load<TiledMap>("Level2");
                 Debug.WriteToFile("Level " + levelIndex + " has been loaded", true, false);
+                Game1.theGame.gameStates.isVisible = true;
             }
+            Game1.theGame.player.sPosition = playerSpawningPosition;
             foreach (TiledTileLayer layer in map.TileLayers)
             {
                 if (layer.Name == "Collisions")
@@ -77,6 +80,7 @@ namespace Apocalyptic_Sunrise
                     collisionLayer = layer;
                 }
             }
+            
         }
 
         public void info(SpriteBatch spriteBatch, GameTime gameTime)
@@ -85,13 +89,13 @@ namespace Apocalyptic_Sunrise
                 remainingdelay2 -= timer2;
                 if (remainingdelay2 <= 0)
                 {
-                    spriteBatch.DrawString(font, "time: 10:45pm", new Vector2(player.sPosition.X + 300,player.sPosition.Y + 300), Color.White);
+                    spriteBatch.DrawString(font, "time: 10:45pm", new Vector2(player.sPosition.X + 400,player.sPosition.Y + 275), Color.White);
                 }
                 var timer3 = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 remainingdelay3 -= timer3;
                 if (remainingdelay3 <= 0)
                 {
-                    spriteBatch.DrawString(font, "location: Bermuda Triangle", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 80), Color.White);
+                    spriteBatch.DrawString(font, "location: Bermuda Triangle", new Vector2(player.sPosition.X + 300, player.sPosition.Y + 300), Color.White);
                 }
         }
         public static int PixelToTile(float pixelCoord)
