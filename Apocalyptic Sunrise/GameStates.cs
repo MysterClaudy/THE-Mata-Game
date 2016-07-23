@@ -106,14 +106,9 @@ namespace Apocalyptic_Sunrise
 
         public void UpdateGame(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             player.Update(gameTime);
             level.Update(gameTime);
             healthBar.Update();
-            foreach(Enemy e in enemies)
-            {
-                e.Update(deltaTime);
-            }
         }
 
         public void UpdateOptions()
@@ -135,11 +130,6 @@ namespace Apocalyptic_Sunrise
                 if (isVisible == true)
                 {
                     player.Draw(spriteBatch);
-                }
-
-               foreach(Enemy e in enemies)
-                {
-                    e.Draw(spriteBatch);
                 }
 
 

@@ -66,11 +66,11 @@ namespace Apocalyptic_Sunrise
         protected override void LoadContent()
         {
             Debug.WriteToFile("Started Loading Game Textures", true, false);
-
+            level.font = Content.Load<SpriteFont>("scoreFont");
+            blackScreen = Content.Load<Texture2D>("Black screen");
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameStates.LoadContent(Content);
             player.LoadContent(Content);
-            level.LoadContent(Content);
             
             Debug.WriteToFile("Finished Loading Game Textures", true, false);
         }
@@ -90,7 +90,7 @@ namespace Apocalyptic_Sunrise
             gameStates.player = player;
             player.gameStates = gameStates;
             level.gameState = gameStates;
-            
+            level.graphics = graphics;
             level.player = player;
             player.level = level;
             gameStates.level = level;
@@ -103,13 +103,18 @@ namespace Apocalyptic_Sunrise
             if(Keyboard.GetState().IsKeyDown(Keys.End))
             {
                 level.LoadNextMap(Content);
+                isloadingLevel = true;
             }
             base.Update(gameTime);
         }
 
+        bool isloadingLevel = false;
+        Texture2D blackScreen;
+        public const float delay = 5;
+
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);           
+            GraphicsDevice.Clear(Color.Cornsilk);           
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, new Matrix?(this.camera.viewMatrix));
             
@@ -123,6 +128,23 @@ namespace Apocalyptic_Sunrise
             }
             gameStates.Draw2(gameTime, spriteBatch);
             spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.viewMatrix);
+            if (isloadingLevel == true)
+            {
+                spriteBatch.Draw(blackScreen, new Vector2(player.m_position.X - 700, player.m_position.Y - 700), Color.White);
+                level.info(spriteBatch, gameTime);
+
+                var timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                level.remainingdelay -= timer;
+                if (level.remainingdelay <= 0)
+                {
+                    isloadingLevel = false;
+                    level.remainingdelay = delay;
+                }
+
+            }
+            spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }

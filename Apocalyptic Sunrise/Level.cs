@@ -16,12 +16,12 @@ namespace Apocalyptic_Sunrise
 {
     public class Level
     {
-
+        public GraphicsDeviceManager graphics;
         public TiledMap map = null;
         public TiledTileLayer collisionLayer;
         public Player player;
         Game1 game = null;
-
+        public SpriteFont font;
         List<Enemy> enemies = new List<Enemy>();
         public GameStates gameState;
         public Vector2 playerSpawningPosition;
@@ -30,12 +30,16 @@ namespace Apocalyptic_Sunrise
         public DevLogging Debug;
 
         private const int numberOfLevels = 3;
-        GraphicsDeviceManager graphics;
 
         public static int tile = 32;
         public static float meter = tile;
 
-
+       public const float delay = 5;
+        public float remainingdelay = delay;
+        private const float delay2 = 1;
+        private float remainingdelay2 = delay2;
+        private const float delay3 = 2;
+        private float remainingdelay3 = delay3;
 
         public int ScreenWidth
         {
@@ -52,7 +56,6 @@ namespace Apocalyptic_Sunrise
             levelIndex++;
             if (levelIndex == 1)
             {
-
                 map = Content.Load<TiledMap>("Level1");
                 playerSpawningPosition = new Vector2(96, 96);
 
@@ -76,23 +79,21 @@ namespace Apocalyptic_Sunrise
             }
         }
 
-        public void LoadContent(ContentManager Content)
+        public void info(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (TiledObjectGroup group in map.ObjectGroups)
-            {
-                if(group.Name == "Enemies")
+                var timer2 = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                remainingdelay2 -= timer2;
+                if (remainingdelay2 <= 0)
                 {
-                    foreach (TiledObject obj in group.Objects)
-                    {
-                        Enemy enemy = new Enemy(game);
-                        enemy.LoadContent(Content);
-                        enemy.Position = new Vector2(obj.X, obj.Y);
-                        enemies.Add(enemy);
-                    }
+                    spriteBatch.DrawString(font, "time: 10:45pm", new Vector2(player.sPosition.X + 300,player.sPosition.Y + 300), Color.White);
                 }
-            }
+                var timer3 = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                remainingdelay3 -= timer3;
+                if (remainingdelay3 <= 0)
+                {
+                    spriteBatch.DrawString(font, "location: Bermuda Triangle", new Vector2(graphics.PreferredBackBufferWidth - 300, graphics.PreferredBackBufferHeight - 80), Color.White);
+                }
         }
-
         public static int PixelToTile(float pixelCoord)
         {
             return (int)Math.Floor(pixelCoord / tile);
